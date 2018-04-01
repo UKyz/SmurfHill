@@ -12,7 +12,7 @@
 
 #include <QApplication>
 
-//Game * game;
+Game * game;
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     View w;
     Model m;
 
-    // On crÃ©e un objet game (QGraphicsView contenant un QGraphicsScene contenant nos images de Schtroumpf)
+    // On crée un objet game (QGraphicsView contenant un QGraphicsScene contenant nos images de Schtroumpf)
     //game = new Game();
 
     Controller(&m, &w);
