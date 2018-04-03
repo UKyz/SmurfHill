@@ -12,7 +12,7 @@
 
 #include <QApplication>
 
-Game * game;
+//Game * game;
 
 int main(int argc, char *argv[])
 {
