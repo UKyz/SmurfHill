@@ -27,12 +27,6 @@ View::View(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     scene->addItem(new Image("/Users/Victor/Schtroumph-Hill/images/SchtroumpfChargement"));
     scene->addText("Schtroumpf-Hill : The Game");
-
-    /*QLabel *gif_anim = new QLabel();
-    QMovie *movie = new QMovie("/Users/Victor/Schtroumph-Hill/images/SchtroumpfChargement");
-    gif_anim->setMovie(movie);
-    movie->start();
-    scene->addWidget(gif_anim);*/
 }
 
 View::~View()
@@ -58,21 +52,6 @@ void View::installScene() {
     ui->graphicsView->setFixedSize(1155,650);
     QObject::connect(scene, SIGNAL(clicked()), this, SLOT(test));
 
-}
-
-Game::Game(QWidget *parent){
-
-    // create the scene
-    scene = new QGraphicsScene();
-    scene->setSceneRect(0,0,800,600); // make the scene 800x600 instead of infinity by infinity (default)
-    // make the newly created scene the scene to visualize (since Game is a QGraphicsView Widget,
-    // it can be used to visualize scenes)
-    setBackgroundBrush(QBrush(QImage("/Users/Victor/Schtroumph-Hill/images/fond_herbe.png")));
-    setScene(scene);
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(1155,650);
-    QObject::connect(scene, SIGNAL(selectionChanged()), this, SLOT(whatIsSelected));
 }
 
 void View::addVillage(Village *village) {

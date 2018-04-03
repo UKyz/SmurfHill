@@ -7,14 +7,12 @@
 class Controller;
 class Model;
 class View;
-class Game;
 
 class Controller
 {
     private:
         Model *model;
         View *view;
-        //Game *game;
     public:
         Controller(Model *model, View *view);
         void startGame();

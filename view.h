@@ -14,7 +14,6 @@
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
 
-class Game;
 class Village;
 
 namespace Ui {
@@ -31,8 +30,6 @@ class View : public QMainWindow
         ~View();
 
         void setControl(Controller *controller) {this->controller = controller;}
-        //void setGame(Game *game) {this->game = game;}
-        //Game *getGame() {return this->game;}
         void installScene();
         void addVillage(Village *village);
 
@@ -46,20 +43,6 @@ class View : public QMainWindow
     private:
         Ui::View *ui;
         Controller *controller;
-        //Game *game;
-};
-
-class Game: public QGraphicsView{
-
-    public:
-        Game(QWidget * parent=0);
-        QGraphicsScene * scene;
-        void setView(View *view) {this->view = view;}
-        void addVillage(Village *village);
-
-    private:
-        View *view;
-
 };
 
 #endif // VIEW_H

@@ -23,15 +23,6 @@ void Controller::startGame() {
 
     view->installScene();
     view->addVillage(this->model->setVillage(view));
-    //game = new Game();
-
-    // On met l'objet en tant qu'objet principal de la view
-    //view->setCentralWidget(game);
-
-    //this->game = game;
-    //game->setView(this->view);
-
-    //game->addVillage(this->model->setVillage());
 
     /* TEST
     Image *arbre = new Image("/Users/Victor/Schtroumph-Hill/images/arbre_1.png");

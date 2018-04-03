@@ -36,7 +36,6 @@ class Village : public Decor
     public:
 
         Village(int posX, int posY, View *view);
-        //void setVillage(Game game);
         Image *getGrandS() {return this->grandS;}
         Image *getMaison1() {return this->maison1;}
         Image *getMaison2() {return this->maison2;}
