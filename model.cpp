@@ -13,3 +13,7 @@ Village *Model::setVillage(View *view) {
     return villageS;
 
 }
+
+void Model::actionPerso(int x, int y, int nbS) {
+    listS->at(0)->moveTo(x, y);
+}

@@ -4,6 +4,7 @@
 #include "autre.h"
 #include "controller.h"
 #include "decor.h"
+#include "personnages.h"
 
 #include <QMainWindow>
 #include <QTableWidget>
@@ -32,6 +33,7 @@ class View : public QMainWindow
         void setControl(Controller *controller) {this->controller = controller;}
         void installScene();
         void addVillage(Village *village);
+        void addPersoNormaux(PersoNormaux *perso);
 
         QGraphicsScene *scene;
 
@@ -43,6 +45,7 @@ class View : public QMainWindow
     private:
         Ui::View *ui;
         Controller *controller;
+        void mousePressEvent(QMouseEvent *event);
 };
 
 #endif // VIEW_H

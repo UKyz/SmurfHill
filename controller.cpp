@@ -24,6 +24,13 @@ void Controller::startGame() {
     view->installScene();
     view->addVillage(this->model->setVillage(view));
 
+    PersoNormaux *S1 = new PersoNormaux("S1", 0, 0, 0, 10);
+    model->addPerso(S1);
+    view->addPersoNormaux(S1);
+
+    /*PersoNormaux *S2 = new PersoNormaux("S1", 384, 138);
+    view->addPersoNormaux(S2);*/
+
     /* TEST
     Image *arbre = new Image("/Users/Victor/Schtroumph-Hill/images/arbre_1.png");
     this->game->scene->addItem(arbre);
@@ -38,4 +45,8 @@ void Controller::startGame() {
     this->game->scene->addItem(arbre_4);
     arbre_4->setPos(0,400);*/
 
+}
+
+void Controller::actionPerso(int x, int y, int nbS) {
+    this->model->actionPerso(x, y, nbS);
 }

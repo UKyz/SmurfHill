@@ -31,7 +31,8 @@ SOURCES += \
     autre.cpp \
     personnages.cpp \
     ressources.cpp \
-    decor.cpp
+    decor.cpp \
+    action.cpp
 
 HEADERS += \
         view.h \
@@ -40,7 +41,8 @@ HEADERS += \
     autre.h \
     personnages.h \
     ressources.h \
-    decor.h
+    decor.h \
+    action.h
 
 FORMS += \
         view.ui
