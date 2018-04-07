@@ -18,6 +18,7 @@ class Controller
         void startGame();
         void clickedOnMap(int x, int y);
         void actionPerso(int x, int y, int nbS);
+        int getNbSFree();
 };
 
 

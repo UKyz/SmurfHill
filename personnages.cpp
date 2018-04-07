@@ -41,50 +41,14 @@ void PersoNormaux::setPos(int x, int y) {
 }
 
 void PersoNormaux::checkAction() {
-    // get a list of all the items currently colliding with this bullet
-    /*QList<QGraphicsItem *> colliding_items = collidingItems();
-
-    // if one of the colliding items is an Enemy, destroy both the bullet and the enemy
-    for (int i = 0, n = colliding_items.size(); i < n; ++i){
-        if (typeid(*(colliding_items[i])) == typeid(Enemy)){
-            // increase the score
-            game->score->increase();
-
-            // remove them from the scene (still on the heap)
-            scene()->removeItem(colliding_items[i]);
-            scene()->removeItem(this);
-
-            // delete them from the heap to save memory
-            delete colliding_items[i];
-            delete this;
-
-            // return (all code below refers to a non existint bullet)
-            return;
-        }
-    }*/
-
-    // if there was no collision with an Enemy, move the bullet forward
-    //this->setPos(this->getPosX(),this->getPosY()-10);
-
-    //qDebug() << "Salut";
-    // if the bullet is off the screen, destroy it
-    /*if (getPosY() < 0){
-        scene()->removeItem(this);
-        delete this;
-    }*/
 
     if(!listActions->empty()) {
 
-
         ActionMove* nextAction = dynamic_cast<ActionMove*>(listActions->first());
-
-        //qDebug() << listActions->length();
 
         if (nextAction != NULL) {
 
             this->setPos(this->getPosX() + nextAction->getDepX(), this->getPosY() + nextAction->getDepY());
-            /*this->setPosX(this->getPosX() + test->getDepX());
-            this->setPosY(this->getPosY() + test->getDepY());*/
             delete nextAction;
             listActions->removeFirst();
 
@@ -124,7 +88,7 @@ void PersoNormaux::moveTo(int x, int y) {
         vitesseMin = (distanceY/nbAction);
         nbActionSupY = (abs(distanceY)%nbAction);
 
-        qDebug() << "ici 1";
+        //qDebug() << "ici 1";
 
     }
     else {
@@ -142,11 +106,11 @@ void PersoNormaux::moveTo(int x, int y) {
         vitesseMin = (distanceX/nbAction);
         nbActionSupX = (abs(distanceX)%nbAction);
 
-        qDebug() << "ici 2";
+        //qDebug() << "ici 2";
     }
 
-    qDebug() << distanceX << " " << distanceY;
-    qDebug() << nbAction << " " << vitesseMax << " " << nbActionSupX << " " << vitesseMin << " " << nbActionSupY;
+    //qDebug() << distanceX << " " << distanceY;
+    //qDebug() << nbAction << " " << vitesseMax << " " << nbActionSupX << " " << vitesseMin << " " << nbActionSupY;
 
     for (int i=0; i<nbAction; i++) {
 
@@ -177,7 +141,7 @@ void PersoNormaux::moveTo(int x, int y) {
                 vitY += 1;
         }
 
-        qDebug() << "État n°" << i << " vitX: " << vitX << ", vitY: " << vitY;
+        //qDebug() << "État n°" << i << " vitX: " << vitX << ", vitY: " << vitY;
         ActionMove *action = new ActionMove(vitX, vitY);
         listActions->push_back(action);
     }

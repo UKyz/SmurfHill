@@ -85,8 +85,8 @@ void View::mousePressEvent(QMouseEvent *event)
 
         QPointF pt = event->pos();
 
-        qDebug() << "plop" << pt.x() << " " << pt.y() << " " << ui->graphicsView->horizontalScrollBar()->value()
-                 << " " << ui->graphicsView->verticalScrollBar()->value();
+        /*qDebug() << "plop" << pt.x() << " " << pt.y() << " " << ui->graphicsView->horizontalScrollBar()->value()
+                 << " " << ui->graphicsView->verticalScrollBar()->value();*/
 
 
         QDialog * dial = new QDialog(this);
@@ -96,7 +96,7 @@ void View::mousePressEvent(QMouseEvent *event)
         QSpinBox *nbS = new QSpinBox;
         nbS->setFocus();
         nbS->setMinimum(1);
-        nbS->setMaximum(10);
+        nbS->setMaximum(this->controller->getNbSFree());
         QRadioButton *b1 = new QRadioButton(tr("Radio 1"));
         b1->setChecked(true);
         QRadioButton *b2 = new QRadioButton(tr("Radio 2"));

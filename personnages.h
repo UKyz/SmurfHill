@@ -49,6 +49,9 @@ class PersoNormaux : public Perso
         void setPosX(int x) {this->posX = x;}
         void setPosY(int y) {this->posY = y;}
         void moveTo(int x, int y);
+        bool isFree() {return this->listActions->empty();}
+        void setDistancePositionClicked(int a) {this->distancePositionClicked = a;}
+        int getDistancePositionClicked() {return this->distancePositionClicked;}
 
     public slots:
         void checkAction();
@@ -61,6 +64,7 @@ class PersoNormaux : public Perso
         Image *imagePerso;
         int deplacementX;
         int deplacementY;
+        int distancePositionClicked;
         QList<Action*> *listActions = new QList<Action*>;
 
 };

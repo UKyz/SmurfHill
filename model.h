@@ -18,6 +18,7 @@ class Model
         Village *setVillage(View *view);
         void actionPerso(int x, int y, int nbS);
         void addPerso(PersoNormaux *S) {listS->append(S);}
+        int getNbSFree();
 };
 
 #endif // MODEL_H
