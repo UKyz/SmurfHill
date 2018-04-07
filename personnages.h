@@ -41,6 +41,7 @@ class PersoNormaux : public Perso
 
         PersoNormaux(QString nom, int x, int y, int pv=0, int vitesse=0);
         ~PersoNormaux();
+
         int getPv() {return this->pv;}
         int getVitesse() {return this->vitesse;}
         void setImagePerso(Image *image) {this->imagePerso = image;}
@@ -49,15 +50,12 @@ class PersoNormaux : public Perso
         void setPosX(int x) {this->posX = x;}
         void setPosY(int y) {this->posY = y;}
         void moveTo(int x, int y);
-        bool isFree() {return this->listActions->empty();}
-        void setDistancePositionClicked(int a) {this->distancePositionClicked = a;}
-        int getDistancePositionClicked() {return this->distancePositionClicked;}
 
     public slots:
         void checkAction();
         //void moveTo(int x, int y);
 
-    private:
+    protected:
 
         int pv;
         int vitesse;
@@ -65,6 +63,52 @@ class PersoNormaux : public Perso
         int deplacementX;
         int deplacementY;
         int distancePositionClicked;
+        QList<Action*> *listActions = new QList<Action*>;
+
+};
+
+class PersoGentil : public PersoNormaux
+{
+
+    Q_OBJECT
+
+    public:
+
+        PersoGentil(QString nom, int x, int y, int pv=0, int vitesse=0);
+        ~PersoGentil();
+        //void moveTo(int x, int y);
+        bool isFree() {return this->listActions->empty();}
+        void setDistancePositionClicked(int a) {this->distancePositionClicked = a;}
+        int getDistancePositionClicked() {return this->distancePositionClicked;}
+
+    private:
+
+        int deplacementX;
+        int deplacementY;
+        int distancePositionClicked;
+        QList<Action*> *listActions = new QList<Action*>;
+
+};
+
+class PersoMechant : public PersoNormaux
+{
+
+    Q_OBJECT
+
+    public:
+
+        PersoMechant(QString nom, int x, int y, int pv=0, int vitesse=0);
+        ~PersoMechant();
+        //void moveTo(int x, int y);
+        //bool isFree() {return this->listActions->empty();}
+        //void setDistancePositionClicked(int a) {this->distancePositionClicked = a;}
+        //int getDistancePositionClicked() {return this->distancePositionClicked;}
+
+    private:
+
+        int deplacementX;
+        int deplacementY;
+        //int distancePositionClicked;
         QList<Action*> *listActions = new QList<Action*>;
 
 };

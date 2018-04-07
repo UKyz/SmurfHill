@@ -19,16 +19,16 @@ void Model::actionPerso(int x, int y, int nbS) {
 
     // On met à jour les distancePositionClicked de chaque S
 
-    for (int i=0; i<listS->size(); i++) {
+    for (int i=0; i<listSGentil->size(); i++) {
 
-        listS->at(i)->setDistancePositionClicked(abs(x-listS->at(i)->getPosX())/(listS->at(i)->getVitesse()));
-        if (abs(y-listS->at(i)->getPosX())/(listS->at(i)->getVitesse()) > listS->at(i)->getDistancePositionClicked())
-            listS->at(i)->setDistancePositionClicked(abs(y-listS->at(i)->getPosX())/(listS->at(i)->getVitesse()));
+        listSGentil->at(i)->setDistancePositionClicked(abs(x-listSGentil->at(i)->getPosX())/(listSGentil->at(i)->getVitesse()));
+        if (abs(y-listSGentil->at(i)->getPosX())/(listSGentil->at(i)->getVitesse()) > listSGentil->at(i)->getDistancePositionClicked())
+            listSGentil->at(i)->setDistancePositionClicked(abs(y-listSGentil->at(i)->getPosX())/(listSGentil->at(i)->getVitesse()));
 
     }
 
     // On duplique la liste de S qu'on va trier en fonction de leur DistancePositionClicked
-    QList<PersoNormaux *> *listSorted = listS;
+    QList<PersoGentil *> *listSorted = listSGentil;
 
     for (int i=(listSorted->size()-1); i>0; i--) {
 
@@ -62,8 +62,8 @@ int Model::getNbSFree() {
 
     int cptS=0;
 
-    for (int i=0; i<listS->size(); i++) {
-        if (listS->at(i)->isFree())
+    for (int i=0; i<listSGentil->size(); i++) {
+        if (listSGentil->at(i)->isFree())
             cptS++;
     }
 

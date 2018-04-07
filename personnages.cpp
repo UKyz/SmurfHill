@@ -23,9 +23,6 @@ PersoNormaux::PersoNormaux(QString nom, int x, int y, int pv, int vitesse)
     this->pv = pv;
     this->vitesse = vitesse;
 
-    setImagePerso(new Image("/Users/Victor/Schtroumph-Hill/images/smurfHead.png"));
-    this->imagePerso->setPos(posX, posY);
-
     QTimer * timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(checkAction()));
 
@@ -156,6 +153,30 @@ void PersoNormaux::moveTo(int x, int y) {
 
 
 PersoNormaux::~PersoNormaux()
+{
+    delete this;
+}
+
+PersoGentil::PersoGentil(QString nom, int x, int y, int pv, int vitesse):PersoNormaux(nom, x, y, pv, vitesse) {
+
+    setImagePerso(new Image("/Users/Victor/Schtroumph-Hill/images/smurfHead.png"));
+    this->imagePerso->setPos(posX, posY);
+
+}
+
+PersoGentil::~PersoGentil()
+{
+    delete this;
+}
+
+PersoMechant::PersoMechant(QString nom, int x, int y, int pv, int vitesse):PersoNormaux(nom, x, y, pv, vitesse) {
+
+    setImagePerso(new Image("/Users/Victor/Schtroumph-Hill/images/BlackSmurf.png"));
+    this->imagePerso->setPos(posX, posY);
+
+}
+
+PersoMechant::~PersoMechant()
 {
     delete this;
 }

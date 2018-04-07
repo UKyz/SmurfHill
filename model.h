@@ -11,13 +11,15 @@
 class Model
 {
     private:
-        QList<PersoNormaux *> *listS = new QList<PersoNormaux *>;
+        QList<PersoGentil *> *listSGentil = new QList<PersoGentil *>;
+        QList<PersoMechant *> *listSMechant = new QList<PersoMechant *>;
 
     public:
         Model();
         Village *setVillage(View *view);
         void actionPerso(int x, int y, int nbS);
-        void addPerso(PersoNormaux *S) {listS->append(S);}
+        void addPersoGentil(PersoGentil *S) {listSGentil->append(S);}
+        void addPersoMechant(PersoMechant *S) {listSMechant->append(S);}
         int getNbSFree();
 };
 
