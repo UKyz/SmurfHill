@@ -5,6 +5,8 @@
 #include "view.h"
 #include <QtDebug>
 
+class View;
+
 class Decor : public QObject
 {
 

@@ -48,3 +48,46 @@ HEADERS += \
 
 FORMS += \
         view.ui
+
+DISTFILES += \
+    images/generique.mp3 \
+    images/movie0.gif \
+    images/movie1.gif \
+    images/movie10.gif \
+    images/movie2.gif \
+    images/movie3.gif \
+    images/movie4.gif \
+    images/movie5.gif \
+    images/movie6.gif \
+    images/movie7.gif \
+    images/movie8.gif \
+    images/movie9.gif \
+    images/SchtroumpfChargement.gif \
+    images/arbre_1.png \
+    images/arbre_2.png \
+    images/arbre_3.png \
+    images/BlackSmurf.png \
+    images/bulleText.png \
+    images/fond_herbe.png \
+    images/grandS.png \
+    images/maisonS1.png \
+    images/maisonS2.png \
+    images/maisonS3.png \
+    images/maisonS4.png \
+    images/maisonS5.png \
+    images/maisonS6.png \
+    images/maisonS7.png \
+    images/maisonS8.png \
+    images/maisonSCostaud.png \
+    images/maisonSette.png \
+    images/maisonSMusicien.png \
+    images/maisonSPaysan.png \
+    images/MoulinS.png \
+    images/puits.png \
+    images/schtroumpf.png \
+    images/Sette01.png \
+    images/smurfHead.png \
+    images/generique.mp3
+
+SUBDIRS += \
+    Schtroumph-Hill.pro

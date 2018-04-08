@@ -145,12 +145,6 @@ void PersoNormaux::moveTo(int x, int y) {
 
 }
 
-/*PersoNormaux::moveTo(int x, int y) {
-
-
-
-}*/
-
 
 PersoNormaux::~PersoNormaux()
 {

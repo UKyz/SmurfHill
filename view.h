@@ -36,18 +36,20 @@ class View : public QMainWindow
         void addVillage(Village *village);
         void addPersoNormaux(PersoNormaux *perso);
 
-        int cptMovie = 0;
         QGraphicsScene *scene;
 
+        bool menuDisplay = true;
+        int cptMovie = 0;
         bool generique = false;
         QMediaPlayer *player;
-
-        bool menuDisplay = true;
 
     private slots:
 
         void on_pushButton_clicked();
         //void test() {QMessageBox::information(this, "Debug", "It works! 2", QMessageBox::Ok);}
+        void displayMessageSette();
+        void displayMessageGrandS();
+        void hideMessageS();
         void film();
         void musique();
 
@@ -57,6 +59,11 @@ class View : public QMainWindow
         void mousePressEvent(QMouseEvent *event);
         QTimer *timer;
         QList <QString> list_movies;
+
+        Image *bulleMessageS;
+        Image *imageMessageS;
+        QGraphicsTextItem *texteMessageS;
+        bool message = false;
 };
 
 #endif // VIEW_H
