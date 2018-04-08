@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
     View w;
     Model m;
     Controller(&m, &w);
-    //test345
     w.show();
 
     return a.exec();
