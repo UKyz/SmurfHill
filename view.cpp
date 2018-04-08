@@ -31,7 +31,7 @@ View::View(QWidget *parent) :
     ui->setupUi(this);
 
     for (int i=0; i<11; i++) {
-        list_movies.append("/Users/Victor/Schtroumph-Hill/images/movie"+QString::number(i));
+        list_movies.append("/Users/Alexia/Documents/ihm/images/movie"+QString::number(i));
     }
 
     timer = new QTimer(this);
@@ -44,14 +44,11 @@ View::View(QWidget *parent) :
     scene->addText("Schtroumpf-Hill : The Game");
 }
 
-View::~View()
-{
+View::~View() {
     delete ui;
 }
 
-void View::on_pushButton_clicked()
-{
-    menuDisplay = false;
+void View::on_pushButton_clicked() {
     timer->disconnect();
     this->controller->startGame();
 }
@@ -63,7 +60,7 @@ void View::installScene() {
     scene->setSceneRect(0,0,3000,2000); // make the scene 800x600 instead of infinity by infinity (default)
     // make the newly created scene the scene to visualize (since Game is a QGraphicsView Widget,
     // it can be used to visualize scenes)
-    ui->graphicsView->setBackgroundBrush(QBrush(QImage("/Users/Victor/Schtroumph-Hill/images/fond_herbe.png")));
+    ui->graphicsView->setBackgroundBrush(QBrush(QImage("/Users/Alexia/Documents/ihm/images/fond_herbe.png")));
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setFixedSize(1155,650);
@@ -83,6 +80,7 @@ void View::addVillage(Village *village) {
     this->scene->addItem(village->getArbre1());
     this->scene->addItem(village->getMaison6());
     this->scene->addItem(village->getMaison8());
+    this->scene->addItem(village->getMaison9());
     this->scene->addItem(village->getMaisonSette());
     this->scene->addItem(village->getMaisonSCostaud());
     this->scene->addItem(village->getMaisonSMusicien());
@@ -111,7 +109,7 @@ void View::musique() {
     generique = !generique;
     if (generique == true) {
         this->player = new QMediaPlayer;
-        this->player->setMedia(QUrl::fromLocalFile("/Users/Victor/Schtroumph-Hill/images/generique.mp3"));
+        this->player->setMedia(QUrl::fromLocalFile("/Users/Alexia/Documents/ihm/generique.mp3"));
         this->player->setVolume(50);
         this->player->play();
     }
