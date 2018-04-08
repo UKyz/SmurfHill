@@ -22,15 +22,25 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QSpinBox>
+#include <QTimer>
 
 View::View(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::View)
 {
     ui->setupUi(this);
+
+    for (int i=0; i<11; i++) {
+        list_movies.append("/Users/Victor/Schtroumph-Hill/images/movie"+QString::number(i));
+    }
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(film()));
+    timer->start(5000);
+
     scene = new QGraphicsScene();
     ui->graphicsView->setScene(scene);
-    scene->addItem(new Image("/Users/Victor/Schtroumph-Hill/images/SchtroumpfChargement"));
+    ui->graphicsView->setFixedSize(600,550);
     scene->addText("Schtroumpf-Hill : The Game");
 }
 
@@ -41,6 +51,8 @@ View::~View()
 
 void View::on_pushButton_clicked()
 {
+    menuDisplay = false;
+    timer->disconnect();
     this->controller->startGame();
 }
 
@@ -61,19 +73,49 @@ void View::installScene() {
 
 void View::addVillage(Village *village) {
 
-    //this->scene->addItem(village->getMaison1());
+    this->scene->addItem(village->getMoulinS());
+    this->scene->addItem(village->getMaison7());
+    this->scene->addItem(village->getMaison5());
+    this->scene->addItem(village->getMaison1());
     this->scene->addItem(village->getMaison2());
-    this->scene->addItem(village->getMaisonSette());
     this->scene->addItem(village->getMaison3());
     this->scene->addItem(village->getMaison4());
-    this->scene->addItem(village->getGrandS());
-    this->scene->addItem(village->getMaison5());
     this->scene->addItem(village->getArbre1());
+    this->scene->addItem(village->getMaison6());
+    this->scene->addItem(village->getMaison8());
+    this->scene->addItem(village->getMaisonSette());
     this->scene->addItem(village->getMaisonSCostaud());
-    //village->getMaisonSCostaud()->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    this->scene->addItem(village->getMaisonSMusicien());
     this->scene->addItem(village->getMaisonSPaysan());
-    //this->scene->addItem(village->getMoulinS());
+    this->scene->addItem(village->getGrandS());
+    this->scene->addItem(village->getPuits());
+    this->scene->addItem(village->getArbre2());
 
+}
+
+void View::film()
+{
+    scene->clear();
+    if (cptMovie == 11)
+        cptMovie = 0;
+    QLabel *gif_anim = new QLabel();
+    QMovie *movie = new QMovie(list_movies[cptMovie]);
+    gif_anim->setMovie(movie);
+    movie->start();
+    scene->addWidget(gif_anim);
+
+    cptMovie++;
+}
+
+void View::musique() {
+    generique = !generique;
+    if (generique == true) {
+        this->player = new QMediaPlayer;
+        this->player->setMedia(QUrl::fromLocalFile("/Users/Victor/Schtroumph-Hill/images/generique.mp3"));
+        this->player->setVolume(50);
+        this->player->play();
+    }
+    else this->player->stop();
 }
 
 void View::addPersoNormaux(PersoNormaux *perso) {

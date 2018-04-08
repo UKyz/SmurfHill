@@ -7,7 +7,6 @@
 #include <QGraphicsView>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
-#include <QTimer>
 #include <QVBoxLayout>
 #include <QApplication>
 

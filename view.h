@@ -14,6 +14,7 @@
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
+#include <QMediaPlayer>
 
 class Village;
 
@@ -35,17 +36,27 @@ class View : public QMainWindow
         void addVillage(Village *village);
         void addPersoNormaux(PersoNormaux *perso);
 
+        int cptMovie = 0;
         QGraphicsScene *scene;
+
+        bool generique = false;
+        QMediaPlayer *player;
+
+        bool menuDisplay = true;
 
     private slots:
 
         void on_pushButton_clicked();
-        void test() {QMessageBox::information(this, "Debug", "It works! 2", QMessageBox::Ok);}
+        //void test() {QMessageBox::information(this, "Debug", "It works! 2", QMessageBox::Ok);}
+        void film();
+        void musique();
 
     private:
         Ui::View *ui;
         Controller *controller;
         void mousePressEvent(QMouseEvent *event);
+        QTimer *timer;
+        QList <QString> list_movies;
 };
 
 #endif // VIEW_H

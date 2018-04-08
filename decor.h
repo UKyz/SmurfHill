@@ -42,26 +42,37 @@ class Village : public Decor
         Image *getMaison3() {return this->maison3;}
         Image *getMaison4() {return this->maison4;}
         Image *getMaison5() {return this->maison5;}
+        Image *getMaison6() {return this->maison6;}
+        Image *getMaison7() {return this->maison7;}
+        Image *getMaison8() {return this->maison8;}
         Image *getMaisonSette() {return this->maisonSette;}
         Image *getMaisonSCostaud() {return this->maisonSCostaud;}
         Image *getMaisonSPaysan() {return this->maisonSPaysan;}
+        Image *getMaisonSMusicien() {return this->maisonSMusicien;}
         Image *getMoulinS() {return this->moulinS;}
+        Image *getPuits() {return this->puits;}
         Image *getArbre1() {return this->arbre1;}
+        Image *getArbre2() {return this->arbre2;}
 
     private:
 
-    protected:
-        Image *grandS;
-        Image *maisonSette;
-        Image *maisonSCostaud;
-        Image *maisonSPaysan;
-        Image *moulinS;
         Image *maison1;
         Image *maison2;
         Image *maison3;
         Image *maison4;
         Image *maison5;
+        Image *maison6;
+        Image *maison7;
+        Image *maison8;
+        Image *grandS;
+        Image *maisonSette;
+        Image *maisonSCostaud;
+        Image *maisonSMusicien;
+        Image *maisonSPaysan;
+        Image *moulinS;
+        Image *puits;
         Image *arbre1;
+        Image *arbre2;
 
 public slots:
     void pixmapClicked()

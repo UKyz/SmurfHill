@@ -10,7 +10,7 @@ Model::Model()
 
 Village *Model::setVillage(View *view) {
 
-    Village *villageS = new Village(100,100, view);
+    Village *villageS = new Village(300,300, view);
     return villageS;
 
 }
