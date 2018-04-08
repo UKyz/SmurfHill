@@ -45,6 +45,7 @@ class Village : public Decor
         Image *getMaison6() {return this->maison6;}
         Image *getMaison7() {return this->maison7;}
         Image *getMaison8() {return this->maison8;}
+        Image *getMaison9() {return this->maison9;}
         Image *getMaisonSette() {return this->maisonSette;}
         Image *getMaisonSCostaud() {return this->maisonSCostaud;}
         Image *getMaisonSPaysan() {return this->maisonSPaysan;}
@@ -64,6 +65,7 @@ class Village : public Decor
         Image *maison6;
         Image *maison7;
         Image *maison8;
+        Image *maison9;
         Image *grandS;
         Image *maisonSette;
         Image *maisonSCostaud;
