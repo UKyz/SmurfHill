@@ -4,10 +4,18 @@
 #include "decor.h"
 #include "personnages.h"
 
-Model::Model() {}
+Model::Model()
+{
+    this->listConseilGrandS->append("Salut mon petit, tu vas bien ?");
+    this->listConseilSette->append("Hey salut ! La forme ?");
+}
 
 Village *Model::setVillage(View *view) {
-    Village *villageS = new Village(500,500, view);
+
+    Village *villageS = new Village(300,300, view);
+    this->villagePosX = 300;
+    this->villagePosY = 300;
+>>>>>>> 2dcd255fbddb9c74ac8be3fbcc10c87a05dda7e3
     return villageS;
 }
 
@@ -75,5 +83,53 @@ int Model::getNbSFree() {
     }
 
     return cptS;
+
+}
+
+QGraphicsTextItem * Model::getMessageGrandS() {
+
+    QString texte = this->listConseilGrandS->at(0);
+
+    QGraphicsTextItem *texteItem = new QGraphicsTextItem(texte);
+    texteItem->setPos(this->villagePosX + 200, this->villagePosY - 100);
+    return texteItem;
+
+}
+
+QGraphicsTextItem * Model::getMessageSette() {
+
+    QString texte = this->listConseilSette->at(0);
+
+    QGraphicsTextItem *texteItem = new QGraphicsTextItem(texte);
+    texteItem->setPos(this->villagePosX + 200, this->villagePosY - 100);
+    return texteItem;
+
+}
+
+Image * Model::getImageBulle() {
+
+    Image *imageBulle = new Image("/Users/Victor/Schtroumph-Hill/images/bulleText.png");
+    imageBulle->setPos(this->villagePosX + 125, this->villagePosY - 210);
+
+    return imageBulle;
+
+}
+
+Image * Model::getImageGrandS() {
+
+    Image *imageGrandS = new Image("/Users/Victor/Schtroumph-Hill/images/GrandS.png");
+    imageGrandS->setPos(this->villagePosX + 370, this->villagePosY - 180);
+
+    return imageGrandS;
+
+}
+
+
+Image * Model::getImageSette() {
+
+    Image *imageBulle = new Image("/Users/Victor/Schtroumph-Hill/images/Sette01.png");
+    imageBulle->setPos(this->villagePosX + 370, this->villagePosY - 180);
+
+    return imageBulle;
 
 }

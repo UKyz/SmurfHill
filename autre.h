@@ -6,6 +6,7 @@
 #include <QGraphicsPixmapItem>
 #include <QObject>
 #include <QGraphicsItem>
+#include <QGraphicsTextItem>
 #include <QGraphicsView>
 #include <QGraphicsSceneMouseEvent>
 
@@ -43,6 +44,21 @@ private:
     bool m_mouseClick;
     QPointF m_lastPoint;
 };
+
+/*class Message: public QObject {
+
+    Q_OBJECT
+
+    public:
+        Message();
+        void setBulle() {this->}
+
+    private:
+        Image *bulle;
+        Image *perso;
+        QGraphicsTextItem *texte;
+
+}*/
 
 
 

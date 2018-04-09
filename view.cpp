@@ -23,6 +23,7 @@
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QTimer>
+#include <QGraphicsRectItem>
 
 View::View(QWidget *parent) :
     QMainWindow(parent),
@@ -31,7 +32,7 @@ View::View(QWidget *parent) :
     ui->setupUi(this);
 
     for (int i=0; i<11; i++) {
-        list_movies.append("/Users/Alexia/Documents/ihm/images/movie"+QString::number(i));
+        list_movies.append("/Users/Victor/Schtroumph-Hill//images/movie"+QString::number(i));
     }
 
     timer = new QTimer(this);
@@ -74,11 +75,11 @@ void View::installScene() {
     scene->setSceneRect(0,0,3000,2000); // make the scene 800x600 instead of infinity by infinity (default)
     // make the newly created scene the scene to visualize (since Game is a QGraphicsView Widget,
     // it can be used to visualize scenes)
-    ui->graphicsView->setBackgroundBrush(QBrush(QImage("/Users/Alexia/Documents/ihm/images/fond_herbe.png")));
+    ui->graphicsView->setBackgroundBrush(QBrush(QImage("/Users/Victor/Schtroumph-Hill/images/fond_herbe.png")));
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setFixedSize(1155,650);
-    QObject::connect(scene, SIGNAL(clicked()), this, SLOT(test));
+    //QObject::connect(scene, SIGNAL(clicked()), this, SLOT(test));
 
 }
 
@@ -109,7 +110,7 @@ void View::musique() {
     generique = !generique;
     if (generique == true) {
         this->player = new QMediaPlayer;
-        this->player->setMedia(QUrl::fromLocalFile("/Users/Alexia/Documents/ihm/generique.mp3"));
+        this->player->setMedia(QUrl::fromLocalFile("/Users/Victor/Schtroumph-Hill/images/generique.mp3"));
         this->player->setVolume(50);
         this->player->play();
     }
@@ -164,23 +165,72 @@ void View::addForet2(Foret2 *foret) {
 }
 */
 
+void View::displayMessageSette() {
+
+    if (!this->message) {
+
+        this->bulleMessageS = this->controller->getImageBulle();
+        this->scene->addItem(this->bulleMessageS);
+
+        this->imageMessageS = this->controller->getImageSette();
+        this->scene->addItem(this->imageMessageS);
+
+        this->texteMessageS = this->controller->getMessageSette();
+        this->scene->addItem(this->texteMessageS);
+
+        connect(this->imageMessageS, SIGNAL(clicked()), this, SLOT(hideMessageS()));
+        connect(this->bulleMessageS, SIGNAL(clicked()), this, SLOT(hideMessageS()));
+        connect(this->texteMessageS, SIGNAL(clicked()), this, SLOT(hideMessageS()));
+
+    }
+
+    this->controller->setMessageDisplayed(true);
+}
+
+void View::displayMessageGrandS() {
+
+    if (!this->controller->isMessageDisplayed()) {
+
+        this->bulleMessageS = this->controller->getImageBulle();
+        this->scene->addItem(this->bulleMessageS);
+
+        this->imageMessageS = this->controller->getImageGrandS();
+        this->scene->addItem(this->imageMessageS);
+
+        this->texteMessageS = this->controller->getMessageGrandS();
+        this->scene->addItem(this->texteMessageS);
+
+        connect(this->bulleMessageS, SIGNAL(clicked()), this, SLOT(hideMessageS()));
+        connect(this->imageMessageS, SIGNAL(clicked()), this, SLOT(hideMessageS()));
+        connect(this->texteMessageS, SIGNAL(clicked()), this, SLOT(hideMessageS()));
+
+    }
+
+    this->controller->setMessageDisplayed(true);
+}
+
+void View::hideMessageS() {
+
+    this->controller->setMessageDisplayed(false);
+
+    this->scene->removeItem(this->texteMessageS);
+    this->scene->removeItem(this->bulleMessageS);
+    this->scene->removeItem(this->imageMessageS);
+
+}
+
 void View::addPersoNormaux(PersoNormaux *perso) {
     this->scene->addItem(perso->getImagePerso());
 }
 
-void View::mousePressEvent(QMouseEvent *event)
-    {
+void View::mousePressEvent(QMouseEvent *event) {
 
         QPointF pt = event->pos();
-
-        /*qDebug() << "plop" << pt.x() << " " << pt.y() << " " << ui->graphicsView->horizontalScrollBar()->value()
-                 << " " << ui->graphicsView->verticalScrollBar()->value();*/
-
 
         QDialog * dial = new QDialog(this);
         dial->setWindowTitle("Choix");
         QGridLayout * l = new QGridLayout();
-        QGroupBox *gp = new QGroupBox(tr("Groupe Radio"));
+        //QGroupBox *gp = new QGroupBox(tr("Groupe Radio"));
         QSpinBox *nbS = new QSpinBox;
         nbS->setFocus();
         nbS->setMinimum(1);
@@ -189,12 +239,6 @@ void View::mousePressEvent(QMouseEvent *event)
         b1->setChecked(true);
         QRadioButton *b2 = new QRadioButton(tr("Radio 2"));
         QRadioButton *b3 = new QRadioButton(tr("Radio 3"));
-        /*QLineEdit * prenom = new QLineEdit(dial);
-        QTextEdit * adrP = new QTextEdit(dial);
-        QLineEdit * ville = new QLineEdit(dial);
-        adrP->setMaximumSize(125,100);
-        QLineEdit * codP = new QLineEdit(dial);
-        nom->setFocus();*/
         QPushButton * ok = new QPushButton("Ok");
         connect(ok,SIGNAL(clicked()),dial,SLOT(accept()));
         QPushButton * cancel = new QPushButton("Annuler");
@@ -204,14 +248,6 @@ void View::mousePressEvent(QMouseEvent *event)
         l->addWidget(b1);
         l->addWidget(b2);
         l->addWidget(b3);
-        /*l->addWidget(new QLabel("Prénom",dial),1,0,Qt::AlignCenter);
-        l->addWidget(prenom,1,1,Qt::AlignCenter);
-        l->addWidget(new QLabel("Adresse",dial),2,0,Qt::AlignCenter);
-        l->addWidget(adrP,2,1,Qt::AlignCenter);
-        l->addWidget(new QLabel("Code Postal",dial),3,0,Qt::AlignCenter);
-        l->addWidget(codP,3,1,Qt::AlignCenter);
-        l->addWidget(new QLabel("Ville",dial),4,0,Qt::AlignCenter);
-        l->addWidget(ville,4,1,Qt::AlignCenter);*/
         l->addWidget(ok,5,0);
         l->addWidget(cancel,5,1);
         dial->setLayout(l);
@@ -227,5 +263,5 @@ void View::mousePressEvent(QMouseEvent *event)
 
         delete dial;
 
-    }
+}
 
