@@ -91,3 +91,6 @@ DISTFILES += \
 
 SUBDIRS += \
     Schtroumph-Hill.pro
+
+RESOURCES += \
+    images.qrc

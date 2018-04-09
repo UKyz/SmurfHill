@@ -15,7 +15,6 @@ Village *Model::setVillage(View *view) {
     Village *villageS = new Village(300,300, view);
     this->villagePosX = 300;
     this->villagePosY = 300;
->>>>>>> 2dcd255fbddb9c74ac8be3fbcc10c87a05dda7e3
     return villageS;
 }
 
@@ -54,6 +53,13 @@ void Model::actionPerso(int x, int y, int nbS) {
             }
 
         }
+
+    }
+
+    for (int i=0; i<listSorted->size(); i++) {
+
+        qDebug() << " i = " << i << " Distance : " << listSorted->at(i)->getDistancePositionClicked() <<
+                    " pos (" << listSorted->at(i)->getPosX() << "," << listSorted->at(i)->getPosY() << ")";
 
     }
 

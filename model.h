@@ -10,6 +10,7 @@
 
 class Village;
 class View;
+class Foret1;
 
 class Model
 {

@@ -70,6 +70,7 @@ void View::on_pushButton_clicked() {
 
 void View::installScene() {
 
+    this->menuDisplay = false;
     scene->clear(); // Supprime le chargement
     this->setCentralWidget(ui->graphicsView);
     scene->setSceneRect(0,0,3000,2000); // make the scene 800x600 instead of infinity by infinity (default)
@@ -107,6 +108,7 @@ void View::addVillage(Village *village) {
 }
 
 void View::musique() {
+
     generique = !generique;
     if (generique == true) {
         this->player = new QMediaPlayer;
@@ -225,6 +227,8 @@ void View::addPersoNormaux(PersoNormaux *perso) {
 
 void View::mousePressEvent(QMouseEvent *event) {
 
+    if (!this->menuDisplay) {
+
         QPointF pt = event->pos();
 
         QDialog * dial = new QDialog(this);
@@ -262,6 +266,7 @@ void View::mousePressEvent(QMouseEvent *event) {
         }
 
         delete dial;
+    }
 
 }
 
