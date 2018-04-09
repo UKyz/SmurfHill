@@ -114,7 +114,7 @@ QGraphicsTextItem * Model::getMessageSette() {
 
 Image * Model::getImageBulle() {
 
-    Image *imageBulle = new Image("/Users/Victor/Schtroumph-Hill/images/bulleText.png");
+    Image *imageBulle = new Image("/Users/Alexia/Desktop/images/bulleText.png");
     imageBulle->setPos(this->villagePosX + 125, this->villagePosY - 210);
 
     return imageBulle;
@@ -123,7 +123,7 @@ Image * Model::getImageBulle() {
 
 Image * Model::getImageGrandS() {
 
-    Image *imageGrandS = new Image("/Users/Victor/Schtroumph-Hill/images/GrandS.png");
+    Image *imageGrandS = new Image("/Users/Alexia/Desktop/images/GrandS.png");
     imageGrandS->setPos(this->villagePosX + 370, this->villagePosY - 180);
 
     return imageGrandS;
@@ -133,7 +133,7 @@ Image * Model::getImageGrandS() {
 
 Image * Model::getImageSette() {
 
-    Image *imageBulle = new Image("/Users/Victor/Schtroumph-Hill/images/Sette01.png");
+    Image *imageBulle = new Image("/Users/Alexia/Desktop/images/Sette01.png");
     imageBulle->setPos(this->villagePosX + 370, this->villagePosY - 180);
 
     return imageBulle;
