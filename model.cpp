@@ -4,16 +4,23 @@
 #include "decor.h"
 #include "personnages.h"
 
-Model::Model()
-{
-}
+Model::Model() {}
 
 Village *Model::setVillage(View *view) {
-
-    Village *villageS = new Village(300,300, view);
+    Village *villageS = new Village(500,500, view);
     return villageS;
-
 }
+
+Foret1 *Model::setForet1(View *view) {
+    Foret1 *foretN = new Foret1(1000,200, view);
+    return foretN;
+}
+/*
+Foret2 *Model::setForet2(View *view) {
+    Foret2 *foretN = new Foret2(100,100, view);
+    return foretN;
+}
+*/
 
 void Model::actionPerso(int x, int y, int nbS) {
 

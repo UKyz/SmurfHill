@@ -57,31 +57,13 @@ class Village : public Decor
 
     private:
 
-        Image *maison1;
-        Image *maison2;
-        Image *maison3;
-        Image *maison4;
-        Image *maison5;
-        Image *maison6;
-        Image *maison7;
-        Image *maison8;
-        Image *maison9;
-        Image *grandS;
-        Image *maisonSette;
-        Image *maisonSCostaud;
-        Image *maisonSMusicien;
-        Image *maisonSPaysan;
-        Image *moulinS;
-        Image *puits;
-        Image *arbre1;
-        Image *arbre2;
+        Image *maison1, *maison2, *maison3, *maison4, *maison5, *maison6, *maison7, *maison8, *maison9;
+        Image *grandS, *maisonSette, *maisonSCostaud, *maisonSMusicien, *maisonSPaysan;
+        Image *moulinS, *puits;
+        Image *arbre1, *arbre2;
 
-public slots:
-    void pixmapClicked()
-    {
-        qDebug() << "item clicked!" ;
-    }
-
+    public slots:
+        void pixmapClicked() {qDebug() << "item clicked!";}
 
 };
 
@@ -93,17 +75,76 @@ class Foret : public Decor
     public:
 
         Foret(int posX, int posY, View *view);
+        Image *getNoisette() {return this->noisette;}
+        Image *getBaie() {return this->baie;}
+        Image *getBle() {return this->ble;}
 
     private:
 
     protected:
-        Image *arbre1;
-        Image *arbre2;
-        Image *arbre3;
 
-
+        Image *noisette, *baie, *ble;
 };
 
+class Foret1 : public Foret
+{
 
+    Q_OBJECT
+
+    public:
+
+        Foret1(int posX, int posY, View *view);
+        Image *getArbre1() {return this->arbre1;}
+        Image *getArbre2() {return this->arbre2;}
+        Image *getArbre3() {return this->arbre3;}
+        Image *getArbre4() {return this->arbre4;}
+        Image *getArbre5() {return this->arbre5;}
+        Image *getArbre6() {return this->arbre6;}
+        Image *getArbre7() {return this->arbre7;}
+        Image *getArbre8() {return this->arbre8;}
+        Image *getArbre9() {return this->arbre9;}
+        Image *getArbre10() {return this->arbre10;}
+        Image *getArbre11() {return this->arbre11;}
+        Image *getArbre12() {return this->arbre12;}
+        Image *getArbre13() {return this->arbre13;}
+        Image *getArbre14() {return this->arbre14;}
+        Image *getArbre15() {return this->arbre15;}
+        Image *getArbre16() {return this->arbre16;}
+        Image *getArbre17() {return this->arbre17;}
+
+        Image *getBuisson1() {return this->buisson1;}
+        Image *getBuisson2() {return this->buisson2;}
+        Image *getBuissonBaies1() {return this->buissonbaies1;}
+        Image *getBuissonBaies2() {return this->buissonbaies2;}
+
+    private:
+        Image *arbre1, *arbre2, *arbre3, *arbre4, *arbre5, *arbre6, *arbre7, *arbre8;
+        Image *arbre9, *arbre10, *arbre11, *arbre12, *arbre13, *arbre14, *arbre15, *arbre16, *arbre17;
+        Image *buisson1, *buisson2, *buissonbaies1, *buissonbaies2;
+};
+/*
+class Foret2 : public Foret
+{
+
+    Q_OBJECT
+
+    public:
+
+        Foret2(int posX, int posY, View *view);
+        Image *getArbre1() {return this->arbre1;}
+        Image *getArbre2() {return this->arbre2;}
+        Image *getArbre3() {return this->arbre3;}
+        Image *getArbre4() {return this->arbre4;}
+        Image *getArbre5() {return this->arbre5;}
+        Image *getArbre6() {return this->arbre6;}
+        Image *getArbre7() {return this->arbre7;}
+        Image *getArbre8() {return this->arbre8;}
+        Image *getArbre9() {return this->arbre9;}
+        Image *getArbre10() {return this->arbre10;}
+
+    private:
+        Image *arbre1, *arbre2, *arbre3, *arbre4, *arbre5, *arbre6, *arbre7, *arbre8, *arbre9, *arbre10;
+};
+*/
 
 #endif // DECOR_H

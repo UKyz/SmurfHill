@@ -159,7 +159,7 @@ PersoNormaux::~PersoNormaux()
 
 PersoGentil::PersoGentil(QString nom, int x, int y, int pv, int vitesse):PersoNormaux(nom, x, y, pv, vitesse) {
 
-    setImagePerso(new Image("/Users/Victor/Schtroumph-Hill/images/smurfHead.png"));
+    setImagePerso(new Image("/Users/Alexia/Documents/ihm/images/smurfHead.png"));
     this->imagePerso->setPos(posX, posY);
 
 }
@@ -171,7 +171,7 @@ PersoGentil::~PersoGentil()
 
 PersoMechant::PersoMechant(QString nom, int x, int y, int pv, int vitesse):PersoNormaux(nom, x, y, pv, vitesse) {
 
-    setImagePerso(new Image("/Users/Victor/Schtroumph-Hill/images/BlackSmurf.png"));
+    setImagePerso(new Image("/Users/Alexia/Documents/ihm/images/BlackSmurf.png"));
     this->imagePerso->setPos(posX, posY);
 
 }

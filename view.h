@@ -17,6 +17,9 @@
 #include <QMediaPlayer>
 
 class Village;
+class Foret;
+class Foret1;
+class Foret2;
 
 namespace Ui {
     class View;
@@ -34,6 +37,8 @@ class View : public QMainWindow
         void setControl(Controller *controller) {this->controller = controller;}
         void installScene();
         void addVillage(Village *village);
+        void addForet1(Foret1 *foret);
+        //void addForet2(Foret2 *foret);
         void addPersoNormaux(PersoNormaux *perso);
 
         int cptMovie = 0;

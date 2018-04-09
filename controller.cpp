@@ -23,6 +23,8 @@ void Controller::startGame() {
 
     view->installScene();
     view->addVillage(this->model->setVillage(view));
+    view->addForet1(this->model->setForet1(view));
+    //view->addForet2(this->model->setForet2(view));
 
     PersoGentil *S1 = new PersoGentil("S1", 0, 0, 0, 10);
     model->addPersoGentil(S1);

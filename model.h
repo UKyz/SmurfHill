@@ -17,6 +17,8 @@ class Model
     public:
         Model();
         Village *setVillage(View *view);
+        Foret1 *setForet1(View *view);
+        //Foret2 *setForet2(View *view);
         void actionPerso(int x, int y, int nbS);
         void addPersoGentil(PersoGentil *S) {listSGentil->append(S);}
         void addPersoMechant(PersoMechant *S) {listSMechant->append(S);}
