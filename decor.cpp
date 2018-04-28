@@ -11,28 +11,30 @@ Decor::Decor(int posX, int posY, View *view): QObject() {
 
 Village::Village(int posX, int posY, View *view): Decor(posX, posY, view) {
 
-    this->maison1 = new Image("/Users/Alexia/Desktop/images/maisonS1.png");
-    this->maison2 = new Image("/Users/Alexia/Desktop/images/maisonS2.png");
-    this->maison3 = new Image("/Users/Alexia/Desktop/images/maisonS3.png");
-    this->maison4 = new Image("/Users/Alexia/Desktop//images/maisonS4.png");
-    this->maison5 = new Image("/Users/Alexia/Desktop/images/maisonS5.png");
-    this->maison6 = new Image("/Users/Alexia/Desktop/images/maisonS6.png");
-    this->maison7 = new Image("/Users/Alexia/Desktop/images/maisonS7.png");
-    this->maison8 = new Image("/Users/Alexia/Desktop/images/maisonS8.png");
-    this->maison9 = new Image("/Users/Alexia/Desktop/images/maisonS9.png");
-    this->grandS = new Image("/Users/Alexia/Desktop/images/grandS.png");
-    this->maisonSette = new Image("/Users/Alexia/Desktop/images/maisonSette.png");
-    this->maisonSCostaud = new Image("/Users/Alexia/Desktop/images/maisonSCostaud.png");
-    this->maisonSMusicien = new Image("/Users/Alexia/Desktop/images/maisonSMusicien.png");
-    this->maisonSPaysan = new Image("/Users/Alexia/Desktop/images/maisonSPaysan.png");
-    this->moulinS = new Image("/Users/Alexia/Desktop/images/moulinS.png");
-    this->puits = new Image("/Users/Alexia/Desktop/images/puits.png");
-    this->arbre1 = new Image("/Users/Alexia/Desktop/images/arbre_1.png");
-    this->arbre2 = new Image("/Users/Alexia/Desktop/images/arbre_1.png");
+    this->maison1 = new ImageDecor(":/images/maisonS1");
+    this->maison2 = new ImageDecor(":/images/maisonS2");
+    this->maison3 = new ImageDecor(":/images/maisonS3");
+    this->maison4 = new ImageDecor(":/images/maisonS4");
+    this->maison5 = new ImageDecor(":/images/maisonS5");
+    this->maison6 = new ImageDecor(":/images/maisonS6");
+    this->maison7 = new ImageDecor(":/images/maisonS7");
+    this->maison8 = new ImageDecor(":/images/maisonS8");
+    this->maison9 = new ImageDecor(":/images/maisonS9");
+    this->grandS = new ImageDecor(":/images/grandS");
+    this->maisonSette = new ImageDecor("://images/maisonSette");
+    this->maisonSCostaud = new ImageDecor("://images/maisonSCostaud");
+    this->maisonSMusicien = new ImageDecor("://images/maisonSMusicien");
+    this->maisonSPaysan = new ImageDecor("://images/maisonSPaysan");
+    this->moulinS = new ImageDecor("://images/moulinS");
+    this->puits = new ImageDecor("://images/puits");
+    this->arbre1 = new ImageDecor("://images/arbre_1");
+    this->arbre2 = new ImageDecor("://images/arbre_1");
 
     connect(this->maisonSette, SIGNAL(clicked()), this->view, SLOT(displayMessageSette()));
     connect(this->grandS, SIGNAL(clicked()), this->view, SLOT(displayMessageGrandS()));
     connect(this->maisonSMusicien, SIGNAL(clicked()), this->view, SLOT(musique()));
+    connect(this->maisonSPaysan, SIGNAL(clicked()), this->view, SLOT(displayActionPaysan()));
+    connect(this->maisonSCostaud, SIGNAL(clicked()), this->view, SLOT(displayActionCostaud()));
 
     this->grandS->setPos(posX + 145, posY + 85);
     this->maison1->setPos(posX + 200, posY - 40);
@@ -56,34 +58,42 @@ Village::Village(int posX, int posY, View *view): Decor(posX, posY, view) {
 }
 
 Foret::Foret(int posX, int posY, View *view): Decor(posX, posY, view) {
-    this->noisette = new Image("/Users/Alexia/Desktop/images/noisette.png");
-    this->baie = new Image("/Users/Alexia/Desktop/images/baie.png");
-    this->ble = new Image("/Users/Alexia/Desktop/images/ble.png");
+    nbNoisette = 10;
+    nbBaie = 0;
+    nbBle = 0;
+
+    this->noisette = new ImageDecor(":/images/noisette");
+    this->baie = new ImageDecor(":/images/baie");
+    this->ble = new ImageDecor(":/images/ble");
 }
 
-Foret1::Foret1(int posX, int posY, View *view): Foret(posX, posY, view) {
-    this->arbre1 = new Image("/Users/Alexia/Desktop/images/arbre1.png");
-    this->arbre2 = new Image("/Users/Alexia/Desktop/images/arbre1.png");
-    this->arbre3 = new Image("/Users/Alexia/Desktop/images/arbre1.png");
-    this->arbre4 = new Image("/Users/Alexia/Desktop/images/arbre6.png");
-    this->arbre5 = new Image("/Users/Alexia/Desktop/images/arbre4.png");
-    this->arbre6 = new Image("/Users/Alexia/Desktop/images/arbre6.png");
-    this->arbre7 = new Image("/Users/Alexia/Desktop/images/arbre6.png");
-    this->arbre8 = new Image("/Users/Alexia/Desktop/images/arbre2.png");
-    this->arbre9 = new Image("/Users/Alexia/Desktop/images/arbre7.png");
-    this->arbre10 = new Image("/Users/Alexia/Desktop/images/arbre2.png");
-    this->arbre11 = new Image("/Users/Alexia/Desktop/images/arbre2.png");
-    this->arbre12 = new Image("/Users/Alexia/Desktop/images/arbre2.png");
-    this->arbre13 = new Image("/Users/Alexia/Desktop/images/arbre7.png");
-    this->arbre14 = new Image("/Users/Alexia/Desktop/images/arbre6.png");
-    this->arbre15 = new Image("/Users/Alexia/Desktop/images/arbre6.png");
-    this->arbre16 = new Image("/Users/Alexia/Desktop/images/arbre7.png");
-    this->arbre17 = new Image("/Users/Alexia/Desktop/images/arbre10.png");
+void Foret::onResourceWheatClicked() {this->view->onResourceWheatClicked(this->ble->pos(), nbBle);}
+void Foret::onResourceAcornClicked() {this->view->onResourceAcornClicked(this->noisette->pos(), nbNoisette);}
+void Foret::onResourceBayClicked() {this->view->onResourceBayClicked(this->baie->pos(), nbBaie);}
 
-    this->buisson1 = new Image("/Users/Alexia/Desktop/images/buisson1.png");
-    this->buisson2 = new Image("/Users/Alexia/Desktop/images/buisson2.png");
-    this->buissonbaies1 = new Image("/Users/Alexia/Desktop/images/buissonbaies.png");
-    this->buissonbaies2 = new Image("/Users/Alexia/Desktop/images/buissonbaies.png");
+Foret1::Foret1(int posX, int posY, View *view): Foret(posX, posY, view) {
+    this->arbre1 = new ImageDecor(":/images/arbre1");
+    this->arbre2 = new ImageDecor(":/images/arbre1");
+    this->arbre3 = new ImageDecor(":/images/arbre1");
+    this->arbre4 = new ImageDecor(":/images/arbre6");
+    this->arbre5 = new ImageDecor(":/images/arbre4");
+    this->arbre6 = new ImageDecor(":/images/arbre6");
+    this->arbre7 = new ImageDecor(":/images/arbre6");
+    this->arbre8 = new ImageDecor(":/images/arbre2");
+    this->arbre9 = new ImageDecor(":/images/arbre7");
+    this->arbre10 = new ImageDecor(":/images/arbre2");
+    this->arbre11 = new ImageDecor(":/images/arbre2");
+    this->arbre12 = new ImageDecor(":/images/arbre2");
+    this->arbre13 = new ImageDecor(":/images/arbre7");
+    this->arbre14 = new ImageDecor(":/images/arbre6");
+    this->arbre15 = new ImageDecor(":/images/arbre6");
+    this->arbre16 = new ImageDecor(":/images/arbre7");
+    this->arbre17 = new ImageDecor(":/images/arbre10");
+
+    this->buisson1 = new ImageDecor(":/images/buisson1");
+    this->buisson2 = new ImageDecor(":/images/buisson2");
+    this->buissonbaies1 = new ImageDecor(":/images/buissonbaies");
+    this->buissonbaies2 = new ImageDecor(":/images/buissonbaies");
 
     this->arbre1->setPos(posX - 35, posY - 35);
     this->arbre2->setPos(posX + 175, posY - 100);
@@ -111,20 +121,24 @@ Foret1::Foret1(int posX, int posY, View *view): Foret(posX, posY, view) {
     this->noisette->setPos(posX + 125, posY - 25);
     this->baie->setPos(posX + 110, posY + 80);
     this->ble->setPos(posX + 220, posY + 30);
+
+    connect(this->noisette, SIGNAL(clicked()), SLOT(onResourceAcornClicked()));
+    connect(this->baie, SIGNAL(clicked()), SLOT(onResourceBayClicked()));
+    connect(this->ble, SIGNAL(clicked()), SLOT(onResourceWheatClicked()));
 }
 
 /*
 Foret2::Foret2(int posX, int posY, View *view): Foret(posX, posY, view) {
-    this->arbre1 = new Image("/Users/Alexia/Desktop/images/arbre8.png");
-    this->arbre2 = new Image("/Users/Alexia/Desktop/images/arbre9.png");
-    this->arbre3 = new Image("/Users/Alexia/Desktop/images/arbre9.png");
-    this->arbre4 = new Image("/Users/Alexia/Desktop/images/arbre9.png");
-    this->arbre5 = new Image("/Users/Alexia/Desktop/images/arbre9.png");
-    this->arbre6 = new Image("/Users/Alexia/Desktop/images/arbre8.png");
-    this->arbre7 = new Image("/Users/Alexia/Desktop/images/arbre8.png");
-    this->arbre8 = new Image("/Users/Alexia/Desktop/images/arbre9.png");
-    this->arbre9 = new Image("/Users/Alexia/Desktop/images/arbre8.png");
-    this->arbre10 = new Image("/Users/Alexia/Desktop/images/arbre9.png");
+    this->arbre1 = new Image(":/images/arbre8");
+    this->arbre2 = new Image(":/images/arbre9");
+    this->arbre3 = new Image(":/images/arbre9");
+    this->arbre4 = new Image(":/images/arbre9");
+    this->arbre5 = new Image(":/images/arbre9");
+    this->arbre6 = new Image(":/images/arbre8");
+    this->arbre7 = new Image(":/images/arbre8");
+    this->arbre8 = new Image(":/images/arbre9");
+    this->arbre9 = new Image(":/images/arbre8");
+    this->arbre10 = new Image(":/images/arbre9");
 
     this->arbre1->setPos(posX, posY);
     this->arbre2->setPos(posX - 60, posY + 20);

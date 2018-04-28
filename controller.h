@@ -5,20 +5,36 @@
 #include "view.h"
 #include "model.h"
 
-class Controller;
+#include <QObject>
+#include <QWidget>
+#include <QGraphicsTextItem>
+#include <QTimer>
+
 //class Model;
 class View;
 
-class Controller
+class Controller: public QObject
 {
+    Q_OBJECT
+
+    public slots:
+        void gameLoop();
+
     private:
+
         Model *model;
         View *view;
+        QTimer *timer;
+        QTimer *timerBle;
+
     public:
+
         Controller(Model *model, View *view);
         void startGame();
         void clickedOnMap(int x, int y);
         void actionPerso(int x, int y, int nbS);
+        int distanceEntrePersos(Perso *S, Perso *M);
+        QPointF *getPointDecale(QPointF *pointOrigine, QPointF *pointSuivant);
         int getNbSFree();
         int getVillagePosX() {return this->model->getVillagePosX();}
         int getVillagePosY() {return this->model->getVillagePosY();}
@@ -29,6 +45,11 @@ class Controller
         Image *getImageBulle() {return this->model->getImageBulle();}
         Image *getImageGrandS() {return this->model->getImageGrandS();}
         Image *getImageSette() {return this->model->getImageSette();}
+        void recoltWheat();
+        int getNumberWheatToRecolt() {return this->model->getNumberWheatToRecolt();}
+        int getNumberWheat() {return this->model->getSacBles()->getNombre();}
+        void makeBred(int nbBred);
+
 };
 
 

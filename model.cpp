@@ -56,12 +56,12 @@ void Model::actionPerso(int x, int y, int nbS) {
 
     }
 
-    for (int i=0; i<listSorted->size(); i++) {
+    /*for (int i=0; i<listSorted->size(); i++) {
 
         qDebug() << " i = " << i << " Distance : " << listSorted->at(i)->getDistancePositionClicked() <<
                     " pos (" << listSorted->at(i)->getPosX() << "," << listSorted->at(i)->getPosY() << ")";
 
-    }
+    }*/
 
     // On va déplacer les nbS premier S les plus proche du clique
 
@@ -114,7 +114,7 @@ QGraphicsTextItem * Model::getMessageSette() {
 
 Image * Model::getImageBulle() {
 
-    Image *imageBulle = new Image("/Users/Alexia/Desktop/images/bulleText.png");
+    Image *imageBulle = new Image(":/images/bulleText");
     imageBulle->setPos(this->villagePosX + 125, this->villagePosY - 210);
 
     return imageBulle;
@@ -123,7 +123,7 @@ Image * Model::getImageBulle() {
 
 Image * Model::getImageGrandS() {
 
-    Image *imageGrandS = new Image("/Users/Alexia/Desktop/images/GrandS.png");
+    Image *imageGrandS = new Image(":/images/GrandS");
     imageGrandS->setPos(this->villagePosX + 370, this->villagePosY - 180);
 
     return imageGrandS;
@@ -133,7 +133,7 @@ Image * Model::getImageGrandS() {
 
 Image * Model::getImageSette() {
 
-    Image *imageBulle = new Image("/Users/Alexia/Desktop/images/Sette01.png");
+    Image *imageBulle = new Image(":/images/Sette01");
     imageBulle->setPos(this->villagePosX + 370, this->villagePosY - 180);
 
     return imageBulle;

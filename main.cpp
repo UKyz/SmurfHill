@@ -15,9 +15,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     View w;
     Model m;
-    Controller(&m, &w);
+    Controller *c = new Controller(&m, &w);
 
-    // test
     w.show();
 
     return a.exec();

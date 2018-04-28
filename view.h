@@ -15,11 +15,13 @@
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
 #include <QMediaPlayer>
+#include <QPointF>
 
 class Village;
 class Foret;
 class Foret1;
 class Foret2;
+class Controller;
 
 namespace Ui {
     class View;
@@ -39,7 +41,12 @@ class View : public QMainWindow
         void addVillage(Village *village);
         void addForet1(Foret1 *foret);
         //void addForet2(Foret2 *foret);
-        void addPersoNormaux(PersoNormaux *perso);
+        void addPersoNormaux(PersoGentil *perso);
+        void addPersoNormaux(PersoMechant *perso);
+
+        void onResourceWheatClicked(QPointF pos, int nbBle);
+        void onResourceAcornClicked(QPointF pos, int nbNoisette);
+        void onResourceBayClicked(QPointF pos, int nbBaie);
 
         QGraphicsScene *scene;
 
@@ -57,6 +64,8 @@ class View : public QMainWindow
         void hideMessageS();
         void film();
         void musique();
+        void displayActionCostaud();
+        void displayActionPaysan();
 
     private:
         Ui::View *ui;

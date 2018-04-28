@@ -1,5 +1,5 @@
 #include "personnages.h"
-#include "autre.h"
+//#include "autre.h"
 
 #include <QTimer>
 #include <QtDebug>
@@ -23,11 +23,11 @@ PersoNormaux::PersoNormaux(QString nom, int x, int y, int pv, int vitesse)
     this->pv = pv;
     this->vitesse = vitesse;
 
-    QTimer * timer = new QTimer(this);
+    /*QTimer * timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(checkAction()));
 
     // start the timer
-    timer->start(50);
+    timer->start(16);*/
 
 }
 
@@ -145,6 +145,34 @@ void PersoNormaux::moveTo(int x, int y) {
 
 }
 
+void PersoNormaux::removeAllActions() {
+
+    while(!this->listActions->empty())
+        this->listActions->removeLast();
+
+}
+
+QPointF *PersoNormaux::getDestination() {
+
+    int x = this->posX;
+    int y = this->posY;
+
+    for (Action *action : *this->listActions) {
+
+        ActionMove *actionMove = dynamic_cast<ActionMove *>(action);
+
+        if (actionMove) {
+            x += actionMove->getDepX();
+            y += actionMove->getDepY();
+        }
+    }
+
+    //qDebug() << "Destination -> [" << (x+20) << ";" << (y+20) << "]";
+    return new QPointF(x+20, y+20);
+    // + 20 pour contrer les -20 de moveTo
+
+}
+
 
 PersoNormaux::~PersoNormaux()
 {
@@ -153,7 +181,7 @@ PersoNormaux::~PersoNormaux()
 
 PersoGentil::PersoGentil(QString nom, int x, int y, int pv, int vitesse):PersoNormaux(nom, x, y, pv, vitesse) {
 
-    setImagePerso(new Image("/Users/Alexia/Desktop/images/smurfHead.png"));
+    setImagePerso(new Image(":/images/smurfHead"));
     this->imagePerso->setPos(posX, posY);
 
 }
@@ -165,7 +193,7 @@ PersoGentil::~PersoGentil()
 
 PersoMechant::PersoMechant(QString nom, int x, int y, int pv, int vitesse):PersoNormaux(nom, x, y, pv, vitesse) {
 
-    setImagePerso(new Image("/Users/Alexia/Desktop/images/BlackSmurf.png"));
+    setImagePerso(new Image(":/images/BlackSmurf"));
     this->imagePerso->setPos(posX, posY);
 
 }

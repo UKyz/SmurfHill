@@ -1,2 +1,66 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource lang="fr" prefix="/images">
+        <file alias="arbre0">images/arbre0.png</file>
+        <file alias="arbre1">images/arbre1.png</file>
+        <file alias="arbre2">images/arbre2.png</file>
+        <file alias="arbre3">images/arbre3.png</file>
+        <file alias="arbre4">images/arbre4.png</file>
+        <file alias="arbre5">images/arbre5.png</file>
+        <file alias="arbre6">images/arbre6.png</file>
+        <file alias="arbre7">images/arbre7.png</file>
+        <file alias="arbre8">images/arbre8.png</file>
+        <file alias="arbre9">images/arbre9.png</file>
+        <file alias="arbre10">images/arbre10.png</file>
+        <file alias="arbreM1">images/arbreM1.png</file>
+        <file alias="arbreM2">images/arbreM2.png</file>
+        <file alias="arbreM3">images/arbreM3.png</file>
+        <file alias="arbreM4">images/arbreM4.png</file>
+        <file alias="arbreM5">images/arbreM5.png</file>
+        <file alias="arbreM6">images/arbreM6.png</file>
+        <file alias="baie">images/baie.png</file>
+        <file alias="BlackSmurf">images/BlackSmurf.png</file>
+        <file alias="ble">images/ble.png</file>
+        <file alias="buisson1">images/buisson1.png</file>
+        <file alias="buisson2">images/buisson2.png</file>
+        <file alias="buissonbaies">images/buissonbaies.png</file>
+        <file alias="bulleText">images/bulleText.png</file>
+        <file alias="fond_herbe">images/fond_herbe.png</file>
+        <file alias="grandS">images/grandS.png</file>
+        <file alias="maisonS1">images/maisonS1.png</file>
+        <file alias="maisonS2">images/maisonS2.png</file>
+        <file alias="maisonS3">images/maisonS3.png</file>
+        <file alias="maisonS4">images/maisonS4.png</file>
+        <file alias="maisonS5">images/maisonS5.png</file>
+        <file alias="maisonS6">images/maisonS6.png</file>
+        <file alias="maisonS7">images/maisonS7.png</file>
+        <file alias="maisonS8">images/maisonS8.png</file>
+        <file alias="maisonS9">images/maisonS9.png</file>
+        <file alias="maisonSCostaud">images/maisonSCostaud.png</file>
+        <file alias="maisonSette">images/maisonSette.png</file>
+        <file alias="maisonSMusicien">images/maisonSMusicien.png</file>
+        <file alias="maisonSPaysan">images/maisonSPaysan.png</file>
+        <file alias="MoulinS">images/MoulinS.png</file>
+        <file alias="movie0">images/movie0.gif</file>
+        <file alias="movie1">images/movie1.gif</file>
+        <file alias="movie2">images/movie2.gif</file>
+        <file alias="movie3">images/movie3.gif</file>
+        <file alias="movie4">images/movie4.gif</file>
+        <file alias="movie5">images/movie5.gif</file>
+        <file alias="movie6">images/movie6.gif</file>
+        <file alias="movie7">images/movie7.gif</file>
+        <file alias="movie8">images/movie8.gif</file>
+        <file alias="movie9">images/movie9.gif</file>
+        <file alias="movie10">images/movie10.gif</file>
+        <file alias="noisette">images/noisette.png</file>
+        <file alias="puits">images/puits.png</file>
+        <file alias="schtroumpf">images/schtroumpf.png</file>
+        <file alias="SchtroumpfChargement">images/SchtroumpfChargement.gif</file>
+        <file alias="Sette01">images/Sette01.png</file>
+        <file alias="smurfHead">images/smurfHead.png</file>
+        <file alias="souche1">images/souche1.png</file>
+        <file alias="souche2">images/souche2.png</file>
+    </qresource>
+    <qresource prefix="/sons">
+        <file alias="generique">images/generique.mp3</file>
+    </qresource>
+</RCC>
