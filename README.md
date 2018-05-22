@@ -7,13 +7,25 @@
 ## Contents
   * [Install & Play][Installation]
   * [Gameplay][Gameplay]
-    * [The city][City]
-    * [The divinity][Divinity]
-    * [The units][Unit]
-    * [The wonders][Wonder]
-    * [The scientists][Scientists]
     * [Screenshots][Screenshots]
-  * [Contribute][Contribute]
-    * [Execute the tests][Tests]
-    * [Check the code style][CheckXo]
   * [Team][Team]
+
+## Install & Play
+
+```
+git clone https://github.com/UKyz/SmurfHill.git
+cd SmurfHill
+```
+
+## Gameplay
+ 
+### Screenshots
+
+## Team :
+  * Couton Alexia (Save, Decor, Traduction)
+  * Fauquembergue Victor (MVC, Perso, GameLoop, Resource)
+
+[Installation]: https://github.com/UKyz/SmurfHill/blob/master/README.md#install--play
+[Gameplay]: https://github.com/UKyz/SmurfHill/blob/master/README.md#gameplay
+[Screenshots]: https://github.com/UKyz/SmurHill/blob/master/README.md#screenshots
+[Team]: https://github.com/UKyz/SmurfHill/blob/master/README.md#team-
