@@ -1,7 +1,7 @@
 # Welcome in a game Qt in MVC
 
 <p align="center">
-  <img src="http://victor-fauquembergue.fr/imagesGit/smurf0">
+  <img src="http://victor-fauquembergue.fr/imagesGit/smurf1">
 </p>
 
 ## Contents
