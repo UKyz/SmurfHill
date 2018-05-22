@@ -1,5 +1,5 @@
 <RCC>
-    <qresource lang="fr" prefix="/images">
+    <qresource prefix="/images" lang="fr">
         <file alias="arbre0">images/arbre0.png</file>
         <file alias="arbre1">images/arbre1.png</file>
         <file alias="arbre2">images/arbre2.png</file>
@@ -39,7 +39,6 @@
         <file alias="maisonSette">images/maisonSette.png</file>
         <file alias="maisonSMusicien">images/maisonSMusicien.png</file>
         <file alias="maisonSPaysan">images/maisonSPaysan.png</file>
-        <file alias="MoulinS">images/MoulinS.png</file>
         <file alias="movie0">images/movie0.gif</file>
         <file alias="movie1">images/movie1.gif</file>
         <file alias="movie2">images/movie2.gif</file>
@@ -59,8 +58,24 @@
         <file alias="smurfHead">images/smurfHead.png</file>
         <file alias="souche1">images/souche1.png</file>
         <file alias="souche2">images/souche2.png</file>
-    </qresource>
-    <qresource prefix="/sons">
-        <file alias="generique">images/generique.mp3</file>
+        <file alias="moulinS">images/moulinS.png</file>
+        <file alias="lunettesS">images/lunettesS.png</file>
+        <file alias="maisonSBoulanger">images/maisonSBoulanger.png</file>
+        <file alias="PapaS01">images/PapaS01.png</file>
+        <file alias="score">images/score.png</file>
+        <file alias="reserveS">images/reserveS.png</file>
+        <file alias="maisonS10">images/maisonS10.png</file>
+        <file alias="maisonS11">images/maisonS11.png</file>
+        <file alias="maisonS12">images/maisonS12.png</file>
+        <file alias="pain">images/pain.png</file>
+        <file alias="sac">images/sac.png</file>
+        <file alias="LunettesS01">images/LunettesS01.png</file>
+        <file alias="chrono">images/chrono.png</file>
+        <file alias="parchemin">images/parchemin.png</file>
+        <file alias="salsepareille">images/salsepareille.png</file>
+        <file alias="musique">images/musique.png</file>
+        <file alias="bulleText2">images/bulleText2.png</file>
+        <file alias="docteurS">images/docteurS.png</file>
+        <file alias="croixRouge">images/croixRouge.png</file>
     </qresource>
 </RCC>

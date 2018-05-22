@@ -1,18 +1,30 @@
 #include "ressources.h"
 
-Ressource::Ressource(QString nom) {this->nom = nom; this->nombre = 0;}
+Resource::Resource(QString name) {
+    this->name = name;
+    this->number = 0;
+}
+Resource::Resource(QString name, int number) {
+    this->name = name;
+    this->number = number;
+}
 
-void Ressource::ajouterRessource(int nb) {this->nombre += nb;}
-bool Ressource::retirerRessource(int nb) {
-    if (this->nombre - nb >= 0) {
-        this->nombre -= nb;
+bool Resource::removeResource(int nb) {
+    if (this->number - nb >= 0) {
+        this->number -= nb;
         return true;
     }
     else
         return false;
 }
 
-Nourritures::Nourritures(QString nom, int sante)
-    :Ressource(nom) {
-    this->sante = sante;
+Food::Food(QString name, int health) :Resource(name) {
+    this->health = health;
+}
+
+ResourceItem::ResourceItem(QString name, int number, Image *image, int posX, int posY): Resource(name, number) {
+    this->imageItem = image;
+    this->posX = posX;
+    this->posY = posY;
+    this->imageItem->setPos(posX, posY);
 }

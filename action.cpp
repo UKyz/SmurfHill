@@ -10,8 +10,9 @@ ActionMove::ActionMove(int depX, int depY): Action() {
 
 }
 
-void ActionMove::doIt() {
+ActionFight::ActionFight(NormalPerso *fighter, NormalPerso *defender) {
 
-    qDebug() << "coucou";
+    this->fighter = fighter;
+    this->defender = defender;
 
 }
