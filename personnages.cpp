@@ -90,8 +90,8 @@ void NormalPerso::moveTo(int x, int y) {
         //qDebug() << "ici 2";
     }
 
-    //qDebug() << distanceX << " " << distanceY;
-    //qDebug() << nbAction << " " << speedMax << " " << nbActionSupX << " " << speedMin << " " << nbActionSupY;
+    qDebug() << distanceX << " " << distanceY;
+    qDebug() << nbAction << " " << speedMax << " " << nbActionSupX << " " << speedMin << " " << nbActionSupY;
 
     for (int i=0; i<nbAction; i++) {
 
@@ -122,7 +122,7 @@ void NormalPerso::moveTo(int x, int y) {
                 vitY += 1;
         }
 
-        //qDebug() << "État n°" << i << " vitX: " << vitX << ", vitY: " << vitY;
+        qDebug() << "État n°" << i << " vitX: " << vitX << ", vitY: " << vitY;
         ActionMove *action = new ActionMove(vitX, vitY);
         listActions->push_back(action);
     }

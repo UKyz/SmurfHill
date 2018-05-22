@@ -540,19 +540,11 @@ void Controller::gameLoop() {
 
             if (nextActionMove) {
                 // On regarde s'il avance il ne tape pas contre un decor
-                /*if (this->view->scene->itemAt(QPointF(S->getPosX() + nextActionMove->getDepX(), S->getPosY() +
-                                                      nextActionMove->getDepY()), QTransform()) == NULL)
-                    S->setPos(S->getPosX() + nextActionMove->getDepX(), S->getPosY() + nextActionMove->getDepY());*/
-                //qDebug() << "set pos [" << QString::number(nextActionMove->getDepX()) << ";" << QString::number(nextActionMove->getDepY()) << "]";
                 S->setPos(nextActionMove->getDepX() + S->getPosX(), nextActionMove->getDepY() + S->getPosY());
-
-                qDebug() << "pos [" << QString::number(S->getPosX()) << ";" << QString::number(S->getPosY()) << "]";
                 S->moveTo(S->getPosX() + nextActionMove->getDepX() + 20, S->getPosY() + nextActionMove->getDepY() + 20);
-
-                qDebug() << "move to [" << QString::number(S->getPosX() + nextActionMove->getDepX()) << ";" << QString::number(S->getPosY() + nextActionMove->getDepY()) << "]";
                 S->removeFirstAction();
 
-                /*QList<QGraphicsItem *> listCollision = S->getImagePerso()->collidingItems();
+                QList<QGraphicsItem *> listCollision = S->getImagePerso()->collidingItems();
 
                 for (QGraphicsItem * i : listCollision) {
 
@@ -585,7 +577,7 @@ void Controller::gameLoop() {
 
                     }
 
-                }*/
+                }
             }
             else if (nextActionFight) {
 

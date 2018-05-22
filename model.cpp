@@ -144,12 +144,12 @@ void Model::actionPerso(int x, int y, int nbS) {
 
     }
 
-    for (int i=0; i<listSorted->size(); i++) {
+    /*for (int i=0; i<listSorted->size(); i++) {
 
         qDebug() << " i = " << i << " Distance : " << listSorted->at(i)->getDistancePositionClicked() <<
                     " pos (" << listSorted->at(i)->getPosX() << "," << listSorted->at(i)->getPosY() << ")";
 
-    }
+    }*/
 
     // On va déplacer les nbS premier S les plus proche du clique
 
