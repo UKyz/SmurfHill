@@ -12,6 +12,7 @@ Feel free to contribute or discuss the game.
 
 ## Contents
   * [Install & Play][Installation]
+  * [Requirements][Requirements]
   * [Gameplay][Gameplay]
     * [Village][Village]
     * [Forests][Forests]
@@ -23,10 +24,17 @@ Feel free to contribute or discuss the game.
 
 ## Install & Play
 
-```
-git clone https://github.com/UKyz/SmurfHill.git
-cd SmurfHill
-```
+* Open QtCreator
+* New Project
+* In "Import Project" choose Git clone
+* In Repository add : ```https://github.com/UKyz/SmurfHill.git```
+* Continue
+* Run
+
+## Requirements 
+
+* Qt (>= 5.2) [(Install)][Qt]
+* Qt multimedia
 
 ## Gameplay
 
@@ -91,6 +99,8 @@ Farmer Smurf, Baker Smurf, Hefty Smurf and Doctor Smurf are called the NonPlayer
   * Fauquembergue Victor (MVC, Perso, GameLoop, Resource)
 
 [Installation]: https://github.com/UKyz/SmurfHill/blob/master/README.md#install--play
+[Qt]: https://www.qt.io/download
+[Requirements]: https://github.com/UKyz/SmurfHill/blob/master/README.md#requirements
 [Gameplay]: https://github.com/UKyz/SmurfHill/blob/master/README.md#gameplay
 [Screenshots]: https://github.com/UKyz/SmurfHill/blob/master/README.md#screenshots
 [Village]: https://github.com/UKyz/SmurfHill/blob/master/README.md#village
