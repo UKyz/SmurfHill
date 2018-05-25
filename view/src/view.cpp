@@ -1,34 +1,9 @@
-#include "view.h"
+#include "../includes/view.h"
 #include "ui_view.h"
-#include "../controller/controller.h"
-#include "../model/model.h"
-#include "../model/autre.h"
-#include "../model/decor.h"
-
-#include <QTableWidget>
-#include <QMessageBox>
-#include <QDialog>
-#include <QLineEdit>
-#include <QTextEdit>
-#include <QPushButton>
-#include <QLabel>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QPixmap>
-#include <QGraphicsPixmapItem>
-#include <QMovie>
-#include <QGraphicsProxyWidget>
-#include <QPoint>
-#include <QScrollBar>
-#include <QGroupBox>
-#include <QRadioButton>
-#include <QSpinBox>
-#include <QCheckBox>
-#include <QTimer>
-#include <QGraphicsRectItem>
-#include <QHBoxLayout>
-#include <QDateTime>
-#include <QSettings>
+#include "./controller/includes/controller.h"
+#include "./model/includes/model.h"
+#include "./model/includes/autre.h"
+#include "./model/includes/decor.h"
 
 View::View(QWidget *parent) :
     QMainWindow(parent),

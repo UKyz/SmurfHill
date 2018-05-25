@@ -1,10 +1,10 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "../model/autre.h"
-#include "../controller/controller.h"
-#include "../model/decor.h"
-#include "../model/personnages.h"
+#include "./model/includes/autre.h"
+#include "./controller/includes/controller.h"
+#include "./model/includes/decor.h"
+#include "./model/includes/personnages.h"
 
 #include <QMainWindow>
 #include <QTableWidget>
@@ -18,6 +18,30 @@
 #include <QPointF>
 #include <QDateTime>
 #include <QSpinBox>
+#include <QTableWidget>
+#include <QMessageBox>
+#include <QDialog>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QPixmap>
+#include <QGraphicsPixmapItem>
+#include <QMovie>
+#include <QGraphicsProxyWidget>
+#include <QPoint>
+#include <QScrollBar>
+#include <QGroupBox>
+#include <QRadioButton>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QTimer>
+#include <QGraphicsRectItem>
+#include <QHBoxLayout>
+#include <QDateTime>
+#include <QSettings>
 
 class Controller;
 class Village;

@@ -4,6 +4,10 @@
 #include <QObject>
 #include <QList>
 #include <QPointF>
+#include <QTimer>
+#include <QtDebug>
+#include <QDebug>
+#include "qdebug.h"
 
 #include "autre.h"
 #include "action.h"

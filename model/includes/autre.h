@@ -13,6 +13,11 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QThread>
 #include <QtDebug>
+#include <QPixmap>
+#include <QTimer>
+#include <QGraphicsScene>
+#include <QtDebug>
+#include <math.h>
 
 class Resource;
 

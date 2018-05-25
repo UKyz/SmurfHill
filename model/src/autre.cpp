@@ -1,10 +1,4 @@
-#include "autre.h"
-
-#include <QPixmap>
-#include <QTimer>
-#include <QGraphicsScene>
-#include <QtDebug>
-#include <math.h>
+#include "../includes/autre.h"
 
 Image::Image(QString url, QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
     setPixmap(QPixmap(url));

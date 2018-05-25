@@ -4,6 +4,8 @@
 #include "personnages.h"
 
 #include <QObject>
+#include <QtDebug>
+#include <QDebug>
 
 class NormalPerso;
 

@@ -1,4 +1,4 @@
-#include "ressources.h"
+#include "../includes/ressources.h"
 
 Resource::Resource(QString name) {
     this->name = name;

@@ -1,7 +1,4 @@
-#include "action.h"
-
-#include <QtDebug>
-#include <QDebug>
+#include "../includes/action.h"
 
 ActionMove::ActionMove(int depX, int depY): Action() {
     this->deplacementX = depX;

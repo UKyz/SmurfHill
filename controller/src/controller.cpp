@@ -1,28 +1,10 @@
-#include "../view/view.h"
-#include "controller.h"
-#include "../model/model.h"
-#include "../model/autre.h"
-#include "../model/personnages.h"
-#include "../model/ressources.h"
-#include "../model/decor.h"
-
-#include <QMessageBox>
-#include <QGraphicsScene>
-#include <QPixmap>
-#include <QTimer>
-#include <QFileDialog>
-#include <QGraphicsView>
-#include <QDateTime>
-#include <QCoreApplication>
-#include <QPointF>
-#include <QtDebug>
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-#include <QDateTime>
-
-#include <random>
-#include <iostream>
+#include "./view/includes/view.h"
+#include "../includes/controller.h"
+#include "./model/includes/model.h"
+#include "./model/includes/autre.h"
+#include "./model/includes/personnages.h"
+#include "./model/includes/ressources.h"
+#include "./model/includes/decor.h"
 
 Controller::Controller(Model *model, View *view): QObject(0) {
     this->model = model;

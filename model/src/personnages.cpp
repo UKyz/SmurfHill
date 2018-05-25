@@ -1,9 +1,4 @@
-#include "personnages.h"
-
-#include <QTimer>
-#include <QtDebug>
-#include <QDebug>
-#include "qdebug.h"
+#include "../includes/personnages.h"
 
 NormalPerso::NormalPerso(int x, int y, int damage, int hp, int speed) {
     this->posX = x;

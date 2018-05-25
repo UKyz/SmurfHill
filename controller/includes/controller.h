@@ -1,15 +1,30 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "../model/autre.h"
-#include "../view/view.h"
-#include "../model/model.h"
+#include "./model/includes/autre.h"
+#include "./view/includes/view.h"
+#include "./model/includes/model.h"
 
 #include <QObject>
 #include <QWidget>
 #include <QGraphicsTextItem>
 #include <QTimer>
+#include <QMessageBox>
+#include <QGraphicsScene>
+#include <QPixmap>
+#include <QTimer>
+#include <QFileDialog>
+#include <QGraphicsView>
 #include <QDateTime>
+#include <QCoreApplication>
+#include <QPointF>
+#include <QtDebug>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <QDateTime>
+#include <random>
+#include <iostream>
 
 class View;
 

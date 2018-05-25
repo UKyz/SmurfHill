@@ -30,27 +30,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        view/view.cpp \
-    model/model.cpp \
-    controller/controller.cpp \
-    model/autre.cpp \
-    model/personnages.cpp \
-    model/ressources.cpp \
-    model/decor.cpp \
-    model/action.cpp
+        view/src/view.cpp \
+    model/src/model.cpp \
+    controller/src/controller.cpp \
+    model/src/autre.cpp \
+    model/src/personnages.cpp \
+    model/src/ressources.cpp \
+    model/src/decor.cpp \
+    model/src/action.cpp
 
 HEADERS += \
-        view/view.h \
-    model/model.h \
-    controller/controller.h \
-    model/autre.h \
-    model/personnages.h \
-    model/ressources.h \
-    model/decor.h \
-    model/action.h
+        view/includes/view.h \
+    model/includes/model.h \
+    controller/includes/controller.h \
+    model/includes/autre.h \
+    model/includes/personnages.h \
+    model/includes/ressources.h \
+    model/includes/decor.h \
+    model/includes/action.h
 
 FORMS += \
-        view/view.ui
+        view/src/view.ui
 
 SUBDIRS += \
     Schtroumph-Hill.pro

@@ -1,12 +1,8 @@
-#include "../view/view.h"
-#include "../controller/controller.h"
-#include "model.h"
-#include "decor.h"
-#include "personnages.h"
-#include <time.h>
-
-#include <QFont>
-#include <math.h>
+#include "./view/includes/view.h"
+#include "./controller/includes/controller.h"
+#include "../includes/model.h"
+#include "../includes/decor.h"
+#include "../includes/personnages.h"
 
 Village *Model::setVillage(int x, int y, View *view) {
     this->villagePosX = x;

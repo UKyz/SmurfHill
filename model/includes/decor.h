@@ -1,8 +1,8 @@
 #ifndef DECOR_H
 #define DECOR_H
 
-#include "../model/autre.h"
-#include "../view/view.h"
+#include "./model/includes/autre.h"
+#include "./view/includes/view.h"
 
 #include <QtDebug>
 

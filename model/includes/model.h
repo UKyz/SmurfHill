@@ -12,6 +12,9 @@
 #include <QGraphicsTextItem>
 #include <QDateTime>
 #include <QObject>
+#include <time.h>
+#include <QFont>
+#include <math.h>
 
 class Setting;
 class Village;
