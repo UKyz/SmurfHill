@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/images" lang="fr">
+    <qresource lang="fr" prefix="/images">
         <file alias="arbre0">images/arbre0.png</file>
         <file alias="arbre1">images/arbre1.png</file>
         <file alias="arbre2">images/arbre2.png</file>
@@ -77,5 +77,6 @@
         <file alias="bulleText2">images/bulleText2.png</file>
         <file alias="docteurS">images/docteurS.png</file>
         <file alias="croixRouge">images/croixRouge.png</file>
+        <file alias="costaud">images/Costaud.png</file>
     </qresource>
 </RCC>

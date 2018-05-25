@@ -16,9 +16,13 @@
 #include <QCoreApplication>
 #include <QPointF>
 #include <QtDebug>
+#include <stdlib.h>
 #include <math.h>
 #include <time.h>
 #include <QDateTime>
+
+#include <random>
+#include <iostream>
 
 Controller::Controller(Model *model, View *view): QObject(0) {
     this->model = model;
@@ -27,17 +31,16 @@ Controller::Controller(Model *model, View *view): QObject(0) {
     chrono = new QTimer;
     this->timer = new QTimer;
     this->timerWheat = new QTimer;
-    this->timerSpawnMadPerso = new QTimer;
-    //Q_ASSERT(timer == NULL);
+    this->timerSpawnMadPersoFixed = new QTimer;
+    this->timerSpawnMadPersoMovable = new QTimer;
+    this->timerResources = new QTimer;
 }
 
 void Controller::startNewGame() {
-    //Suppression de la sauvegarde précédente
-    QFile file("sauvegarde.txt");
+    QFile file("save.txt");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QMessageBox::about(view, "Erreur", "Impossible de sauvegarder");
-    }
-    else {
+    } else {
         QTextStream flux(&file);
         flux << "";
     }
@@ -50,8 +53,8 @@ void Controller::startNewGame() {
     listSetting += "F4 200 1600 F5 1000 1400 F6 2300 1600 "; //dernière ligne
     listSetting += "V 1000 800 ";
 
-    QString persoG1 = "1725 1000 1 50 100 10 ", persoG2 = "1775 950 1 60 100 10 ", persoG3 = "1850 975 1 100 100 10 ",
-            persoG4 = "1780 1050 1 88 100 10 ", persoG5 = "1845 1040 1 100 100 10 ";
+    QString persoG1 = "1725 1000 1 100 100 10 ", persoG2 = "1775 950 1 100 100 10 ", persoG3 = "1850 975 1 100 100 10 ",
+            persoG4 = "1780 1050 1 100 100 10 ", persoG5 = "1845 1040 1 100 100 10 ";
     QString persoG6 = "1100 550 1 100 100 10 ", persoG7 = "1200 600 1 100 100 10 ", persoG8 = "1150 500 1 100 100 10 ",
             persoG9 = "1300 550 1 100 100 10 ", persoG10 = "1250 500 1 100 100 10 ";
     QString persoG11 = "800 1050 1 100 100 10 ", persoG12 = "875 1075 1 100 100 10 ", persoG13 = "750 1125 1 100 100 10 ",
@@ -60,46 +63,44 @@ void Controller::startNewGame() {
             persoG9 + persoG10;
     listNicePerso += persoG11 + persoG12 + persoG13 + persoG14 + persoG15;
 
-    QString persoM1 = "300 50 10 150 10 ", persoM2 = "650 300 10 150 10 ", persoM3 = "950 250 10 150 10 ",
-            persoM4 = "1450 250 10 150 10 ", persoM5 = "2150 25 10 150 10 ";
-    QString persoM6 = "2140 250 10 150 10 ", persoM7 = "2500 280 10 150 10 ", persoM8 = "2850 300 10 150 10 ",
-            persoM9 = "300 1100 10 150 10 ", persoM10 = "625 1300 10 150 10 ";
-    QString persoM11 = "300 1600 10 150 10 ", persoM12 = "225 1900 10 150 10 ", persoM13 = "900 1625 10 150 10 ",
-            persoM14 = "1500 1650 10 150 10 ", persoM15 = "1700 1300 10 150 10 ";
-    QString persoM16 = "2700 625 10 150 10 ", persoM17 = "2650 875 10 150 10 ", persoM18 = "2175 1150 10 150 10 ",
-            persoM19 = "2650 1200 10 150 10 ", persoM20 = "2650 1475 10 150 10 ";
-    QString listMadPersoFixed = persoM1 + persoM2 + persoM3 + persoM4 + persoM5 + persoM6 + persoM7 + persoM8 + persoM9 + persoM10;
-    listMadPersoFixed += persoM11 + persoM12 + persoM13 + persoM14 + persoM15 + persoM16 + persoM17 + persoM18 + persoM19 + persoM20;
-
-    QString listMadPersoMobile;
-
     this->model->initFarmer();
     this->model->initBaker();
     this->model->initHefty();
     this->model->initScore(0);
 
-    startGame(listSetting, listNicePerso, listMadPersoFixed, listMadPersoMobile, "");
-
+    startGame(listSetting, listNicePerso, "", "", "");
 }
 
-void Controller::startGame(QString setting, QString nicePerso, QString madPersoFixed, QString madPersoMobile, QString resourceItem) {
-
+void Controller::startGame(QString setting, QString nicePerso, QString madPersoFixed, QString madPersoMovable, QString resourceItem) {
     view->installScene();
 
-    srand(time(NULL));
+    this->fillListAdvicePapaSmurf();
+    this->fillListAdviceSmurfette();
+    this->fillListResource();
+    this->fillListSpawnNicePerso();
+    this->fillListSpotMadPersoFixed();
+    this->fillListSpotMadPersoMovable();
 
     QStringList listSetting = setting.split(" ");
     for (int i=0; i<listSetting.size()-1; i+=3) {
-        if (listSetting[i] == "V") view->addVillage(this->model->setVillage(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
-        else if(listSetting[i] == "F1") view->addForest1(this->model->setForest1(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
-        else if(listSetting[i] == "F2") view->addForest2(this->model->setForest2(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
-        else if(listSetting[i] == "F3") view->addForest3(this->model->setForest3(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
-        else if(listSetting[i] == "F4") view->addForest4(this->model->setForest4(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
-        else if(listSetting[i] == "F5") view->addForest5(this->model->setForest5(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
-        else if(listSetting[i] == "F6") view->addForest6(this->model->setForest6(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
-        else if(listSetting[i] == "F7") view->addForest7(this->model->setForest7(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
+        if (listSetting[i] == "V") {
+            view->addVillage(this->model->setVillage(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
+        } else if(listSetting[i] == "F1") {
+            view->addForest1(this->model->setForest1(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
+        } else if(listSetting[i] == "F2") {
+            view->addForest2(this->model->setForest2(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
+        } else if(listSetting[i] == "F3") {
+            view->addForest3(this->model->setForest3(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
+        } else if(listSetting[i] == "F4") {
+            view->addForest4(this->model->setForest4(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
+        } else if(listSetting[i] == "F5") {
+            view->addForest5(this->model->setForest5(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
+        } else if(listSetting[i] == "F6") {
+            view->addForest6(this->model->setForest6(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
+        } else if(listSetting[i] == "F7") {
+            view->addForest7(this->model->setForest7(listSetting[i+1].toInt(), listSetting[i+2].toInt(), view));
+        }
     }
-
     if (nicePerso != "") {
         QStringList listNicePerso = nicePerso.split(" ");
         for (int i=0; i<listNicePerso.size()-1; i+=6) {
@@ -109,7 +110,6 @@ void Controller::startGame(QString setting, QString nicePerso, QString madPersoF
             view->addNormalPerso(S);
         }
     }
-
     if (madPersoFixed != "") {
         QStringList listMadPersoFixed = madPersoFixed.split(" ");
         for (int i=0; i<listMadPersoFixed.size()-1; i+=5) {
@@ -119,79 +119,68 @@ void Controller::startGame(QString setting, QString nicePerso, QString madPersoF
             view->addNormalPerso(S);
         }
     }
-
-    if (madPersoMobile != "") {
-        QStringList listMadPersoMobile = madPersoMobile.split(" ");
-        for (int i=0; i<listMadPersoMobile.size()-1; i+=5) {
-            MadPerso *S = new MadPerso(listMadPersoMobile[i].toInt(), listMadPersoMobile[i+1].toInt(),
-                    listMadPersoMobile[i+2].toInt(), listMadPersoMobile[i+3].toInt(), listMadPersoMobile[i+4].toInt());
+    if (madPersoMovable != "") {
+        QStringList listMadPersoMovable = madPersoMovable.split(" ");
+        for (int i=0; i<listMadPersoMovable.size()-1; i+=5) {
+            MadPerso *S = new MadPerso(listMadPersoMovable[i].toInt(), listMadPersoMovable[i+1].toInt(),
+                    listMadPersoMovable[i+2].toInt(), listMadPersoMovable[i+3].toInt(), listMadPersoMovable[i+4].toInt());
             model->addMadPersoFixed(S);
             view->addNormalPerso(S);
         }
     }
-
     this->displayResourceItem(resourceItem);
-
-    /*this->model->addResourceItem(new ResourceItem("Wheat", 10, new Image(":/images/ble"),
-                                                    0, 0));
-    this->view->scene->addItem(this->model->getlistResourceItem()->last()->getImageItem());
-    connect(this->model->getlistResourceItem()->first()->getImageItem(), SIGNAL(clicked()), this, SLOT(onResourceItemClicked()));*/
-
-    /*QPointF *point = new QPointF(0,0);
-    Image *imageTest = new Image(":/images/ble");
-    imageTest->setPos(*point);
-    this->view->scene->addItem(imageTest);
-    */
-
+    this->model->setFrontMessage(tr("Bonjour et bienvenue dans le village \ndes Schtroumpfs ! \n\n"
+                                    "Le Grand Schtroumpf va te guider. \n"
+                                    "Clique sur lui pour qu'il t'explique \ncomment jouer. \n"
+                                    "La Schtroumpfette va te raconter \nl'histoire des Schtroumpfs. \n"
+                                    "\n\nEn cliquant sur ce message, \nil disparaitra."));
     this->view->displayFrontMessage();
-
+    // Start Timers
     this->model->setTimeStart(timeStart());
     connect(timer, SIGNAL(timeout()), this, SLOT(gameLoop()));
     this->timer->start(16);
-    connect(timerWheat, SIGNAL(timeout()), this->model->getWheatField(), SLOT(ete()));
-    this->timerWheat->start(1000);
-    connect(timerSpawnMadPerso, SIGNAL(timeout()), this, SLOT(checkMadPerso()));
-    this->timerSpawnMadPerso->start(10000);
-
+    connect(timerWheat, SIGNAL(timeout()), this->model->getWheatField(), SLOT(summer()));
+    this->timerWheat->start(60000);
+    connect(timerSpawnMadPersoFixed, SIGNAL(timeout()), this, SLOT(checkMadPersoFixed()));
+    this->timerSpawnMadPersoFixed->start(30000);
+    connect(timerSpawnMadPersoMovable, SIGNAL(timeout()), this, SLOT(checkMadPersoMovable()));
+    this->timerSpawnMadPersoMovable->start(60000);
+    connect(timerResources, SIGNAL(timeout()), this, SLOT(checkResources()));
+    this->timerResources->start(60000);
+    // Cheat Game
     this->model->getBagSarsaparillas()->addResource(1000);
-
-    MadPerso *perso = new MadPerso(0, 0, 1, 20, 1);
-    this->model->addMadPersoMobile(perso);
-    this->view->scene->addItem(perso->getImagePerso());
-    perso->moveTo(perso->getPosX()+21, perso->getPosY()+21);
-    qDebug() << "move to [" << QString::number(perso->getPosX()+1) << "," << QString::number(perso->getPosY()+1) << "]";
 }
 
 void Controller::save() {
     QFile file("save.txt");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QMessageBox::about(view, tr("Erreur"), tr("Impossible de sauvegarder"));
-    }
-    else {
+    } else {
         QTextStream flux(&file);
         flux << tr("Date de la derniere sauvegarde : ") << QDateTime::currentDateTime().toString("dd/MM/yyyy hh:mm:ss") << endl;
-
         for (Setting *D : *this->model->getlistSetting()) {
             flux << D->getType() << " " << D->getPosX() << " " << D->getPosY() << " ";
         }
         flux << endl;
         for (NicePerso *PG : *this->model->getlistNicePerso()) {
-            flux << PG->getPosX() << " " << PG->getPosY() << " " << PG->getDamage() << " " << PG->getHp() << " " << PG->getHpMax() << " " << PG->getSpeed() << " ";
+            flux << PG->getPosX() << " " << PG->getPosY() << " " << PG->getDamage() << " " << PG->getHp() << " " << PG->getHpMax() <<
+                    " " << PG->getSpeed() << " ";
         }
         flux << endl;
         for (MadPerso *PMF : *this->model->getlistMadPersoFixed()) {
-            flux << PMF->getPosX() << " " << PMF->getPosY() << " " << PMF->getDamage() << " " << PMF->getHp() << " " << PMF->getSpeed() << " ";
+            flux << PMF->getPosX() << " " << PMF->getPosY() << " " << PMF->getDamage() << " " << PMF->getHp() << " " <<
+                    PMF->getSpeed() << " ";
         }
         flux << endl;
-        for (MadPerso *PMM : *this->model->getlistMadPersoMobile()) {
+        for (MadPerso *PMM : *this->model->getlistMadPersoMovable()) {
             qDebug() << "test ";
-            flux << PMM->getPosX() << " " << PMM->getPosY() << " " << PMM->getDamage() << " " << PMM->getHp() << " " << PMM->getSpeed() << " ";
+            flux << PMM->getPosX() << " " << PMM->getPosY() << " " << PMM->getDamage() << " " << PMM->getHp() << " " <<
+                    PMM->getSpeed() << " ";
         }
         flux << endl;
         for (ResourceItem *R : *this->model->getlistResourceItem()) {
             flux << R->getName() << " " << R->getNumber() << " " << R->getPosX() << " " << R->getPosY() << " ";
         }
-
         flux << endl << gameDuration();
         flux << endl << getScore();
         flux << endl << getNumberSarsaparilla();
@@ -199,7 +188,6 @@ void Controller::save() {
         flux << endl << getNumberBerry();
         flux << endl << getNumberWheat();
         flux << endl << getNumberBread();
-
         flux << endl << getLevelFarmer();
         flux << endl << getLevelBaker();
         flux << endl << getLevelHefty();
@@ -208,8 +196,7 @@ void Controller::save() {
 }
 
 void Controller::loadSave() {
-
-    QString setting, nicePerso, madPersoFixed, madPersoMobile, ressouceItem;
+    QString setting, nicePerso, madPersoFixed, madPersoMovable, ressouceItem;
     QString time, score, sarsaparillas, berries, acorn, wheat, bread;
     QString farmer, baker, hefty;
     QFile file("save.txt");
@@ -224,7 +211,7 @@ void Controller::loadSave() {
         setting = flux.readLine();
         nicePerso = flux.readLine();
         madPersoFixed = flux.readLine();
-        madPersoMobile = flux.readLine();
+        madPersoMovable = flux.readLine();
         ressouceItem = flux.readLine();
 
         time = flux.readLine();
@@ -238,11 +225,9 @@ void Controller::loadSave() {
         farmer = flux.readLine();
         baker = flux.readLine();
         hefty = flux.readLine();
-
     }
     file.close();
 
-    // Remplir les arguments du paysan avec des valeurs sauvegardées
     this->model->initFarmer();
     this->model->farmerUp(farmer.toInt());
     this->model->initBaker();
@@ -258,10 +243,7 @@ void Controller::loadSave() {
     this->model->getBagWheats()->addResource(wheat.toInt());
     this->model->getBagBreads()->addResource(bread.toInt());
 
-    startGame(setting, nicePerso, madPersoFixed, madPersoMobile, ressouceItem);
-
-    /*this->timer->start(16);
-    this->timerWheat->start(1000);*/
+    startGame(setting, nicePerso, madPersoFixed, madPersoMovable, ressouceItem);
 }
 
 void Controller::saveQuit() {
@@ -270,73 +252,65 @@ void Controller::saveQuit() {
 }
 
 int Controller::gameDuration() {
-
     QDateTime timeNow = QDateTime::currentDateTime();
     QDateTime timeStart = getTimeStart();
     qint64 millisecondsDiff = timeStart.msecsTo(timeNow);
     int chrono = millisecondsDiff/1000 + (this->model->getTimePreviouslyPlayed());
-
     return chrono;
 }
-
-QDateTime Controller::timeStart() {return QDateTime::currentDateTime();}
 
 void Controller::displayResourceItem(QString resourceItem) {
     if (resourceItem == "") {
         for (Setting * d : *this->model->getlistSetting()) {
             Forest *forest = dynamic_cast<Forest *>(d);
             if (forest) {
-                this->model->addResourceItem(new ResourceItem("Wheat", ((rand() % 6) + 1), new Image(":/images/ble"),
+                this->model->addResourceItem(new ResourceItem("Wheat", ((rand() % 6) + 1), new ImageSetting(":/images/ble"),
                                                                 forest->getPosXWheat(), forest->getPosYWheat()));
                 this->view->scene->addItem(this->model->getlistResourceItem()->last()->getImageItem());
-                this->model->addResourceItem(new ResourceItem("Acorn", ((rand() % 5) + 1), new Image(":/images/noisette"),
+                this->model->addResourceItem(new ResourceItem("Acorn", ((rand() % 5) + 1), new ImageSetting(":/images/noisette"),
                                                                 forest->getPosXAcorn(), forest->getPosYAcorn()));
                 this->view->scene->addItem(this->model->getlistResourceItem()->last()->getImageItem());
-                this->model->addResourceItem(new ResourceItem("Baie", ((rand() % 5) + 1), new Image(":/images/baie"),
+                this->model->addResourceItem(new ResourceItem("Baie", ((rand() % 5) + 1), new ImageSetting(":/images/baie"),
                                                                 forest->getPosXBerries(), forest->getPosYBerries()));
                 this->view->scene->addItem(this->model->getlistResourceItem()->last()->getImageItem());
              }
         }
-
         for (QPointF * point : *this->model->getlistSpotResourceItem()) {
             int i = ((rand() % 10) + 1);
 
             if (i > 9) {
-                this->model->addResourceItem(new ResourceItem("Sarsaparilla", ((rand() % 3) + 1), new Image(":/images/salsepareille"),
+                this->model->addResourceItem(new ResourceItem("Sarsaparilla", ((rand() % 3) + 1),
+                                                              new ImageSetting(":/images/salsepareille"),point->x(), point->y()));
+            } else if (i > 6) {
+                this->model->addResourceItem(new ResourceItem("Wheat", ((rand() % 3) + 1), new ImageSetting(":/images/ble"),
                                                                 point->x(), point->y()));
-            }
-            else if (i > 6) {
-                this->model->addResourceItem(new ResourceItem("Wheat", ((rand() % 3) + 1), new Image(":/images/ble"),
+            } else if (i > 3) {
+                this->model->addResourceItem(new ResourceItem("Acorn", ((rand() % 3) + 1), new ImageSetting(":/images/noisette"),
                                                                 point->x(), point->y()));
-            }
-            else if (i > 3) {
-                this->model->addResourceItem(new ResourceItem("Acorn", ((rand() % 3) + 1), new Image(":/images/noisette"),
-                                                                point->x(), point->y()));
-            }
-            else if (i > 0) {
-                this->model->addResourceItem(new ResourceItem("Berry", ((rand() % 3) + 1), new Image(":/images/baie"),
+            } else if (i > 0) {
+                this->model->addResourceItem(new ResourceItem("Berry", ((rand() % 3) + 1), new ImageSetting(":/images/baie"),
                                                                 point->x(), point->y()));
             }
             this->view->scene->addItem(this->model->getlistResourceItem()->last()->getImageItem());
         }
-    }
-    else {
+    } else {
         QStringList listRessouceItem = resourceItem.split(" ");
         for (int i=0; i<listRessouceItem.size()-1; i+=4) {
             if (listRessouceItem[i] == "Sarsaparilla") {
-                this->model->addResourceItem(new ResourceItem(listRessouceItem[i], listRessouceItem[i+1].toInt(), new Image(":/images/salsepareille"),
+                this->model->addResourceItem(new ResourceItem(listRessouceItem[i], listRessouceItem[i+1].toInt(),
+                                             new ImageSetting(":/images/salsepareille"),
                                                                 listRessouceItem[i+2].toInt(), listRessouceItem[i+3].toInt()));
-            }
-            else if (listRessouceItem[i] == "Wheat") {
-                this->model->addResourceItem(new ResourceItem(listRessouceItem[i], listRessouceItem[i+1].toInt(), new Image(":/images/ble"),
+            } else if (listRessouceItem[i] == "Wheat") {
+                this->model->addResourceItem(new ResourceItem(listRessouceItem[i], listRessouceItem[i+1].toInt(),
+                                             new ImageSetting(":/images/ble"),
                                                                 listRessouceItem[i+2].toInt(), listRessouceItem[i+3].toInt()));
-            }
-            else if (listRessouceItem[i] == "Acorn") {
-                this->model->addResourceItem(new ResourceItem(listRessouceItem[i], listRessouceItem[i+1].toInt(), new Image(":/images/noisette"),
+            } else if (listRessouceItem[i] == "Acorn") {
+                this->model->addResourceItem(new ResourceItem(listRessouceItem[i], listRessouceItem[i+1].toInt(),
+                                             new ImageSetting(":/images/noisette"),
                                                                 listRessouceItem[i+2].toInt(), listRessouceItem[i+3].toInt()));
-            }
-            else if (listRessouceItem[i] == "Berry") {
-                this->model->addResourceItem(new ResourceItem(listRessouceItem[i], listRessouceItem[i+1].toInt(), new Image(":/images/baie"),
+            } else if (listRessouceItem[i] == "Berry") {
+                this->model->addResourceItem(new ResourceItem(listRessouceItem[i], listRessouceItem[i+1].toInt(),
+                                             new ImageSetting(":/images/baie"),
                                                                 listRessouceItem[i+2].toInt(), listRessouceItem[i+3].toInt()));
             }
             this->view->scene->addItem(this->model->getlistResourceItem()->last()->getImageItem());
@@ -354,336 +328,244 @@ void Controller::gameLoop() {
             ActionFight* nextActionFight = dynamic_cast<ActionFight*>(S->getFirstAction());
 
             if (nextActionMove) {
-                // On regarde s'il avance il ne tape pas contre un decor
                 if (this->view->scene->itemAt(QPointF(S->getPosX() + nextActionMove->getDepX(), S->getPosY() +
                                                       nextActionMove->getDepY()), QTransform()) == NULL)
                     S->setPos(S->getPosX() + nextActionMove->getDepX(), S->getPosY() + nextActionMove->getDepY());
                 S->removeFirstAction();
 
                 QList<QGraphicsItem *> listCollision = S->getImagePerso()->collidingItems();
-
                 for (QGraphicsItem * i : listCollision) {
-
                     ImageSetting *itemSetting = dynamic_cast<ImageSetting *>(i);
 
                     if (itemSetting) {
-
                         QPointF *pointDestination = S->getDestination();
                         S->removeAllActions();
-
                         QPointF *pointSuivant = new QPointF(S->getPosX(), S->getPosY());
-
-                        //qDebug() << "point SUivant 1 [" << pointSuivant->x() << ";" << pointSuivant->y() << "]";
-
-                        //S->setPos(S->getPosX() - nextAction->getDepX(), S->getPosY() - nextAction->getDepY());
-
                         QPointF *pointOrigine = new QPointF(S->getPosX()-nextActionMove->getDepX(),
                                                             S->getPosY()-nextActionMove->getDepY());
-
-                        //qDebug() << "point Origine [" << pointOrigine->x() << ";" << pointOrigine->y() << "]";
-
                         pointSuivant = this->getPointDecale(pointOrigine, pointSuivant);
-
-                        //qDebug() << "point SUivant 2 [" << pointSuivant->x() << ";" << pointSuivant->y() << "]";
-
-                        //delete nextAction;
-
                         S->setPos(pointSuivant->x(), pointSuivant->y());
                         S->moveTo(pointDestination->x(), pointDestination->y());
-
                     }
-
                 }
-            }
-            else if (nextActionFight) {
-
+            } else if (nextActionFight) {
                 if (nextActionFight->getDefender()->getHurt(nextActionFight->getFighter()->getDamage())) {
-                    //qDebug() << "Prend un coup " << QString::number(nextActionFight->getDefender()->getHp());
-
                     MadPerso* perso = dynamic_cast<MadPerso*>(nextActionFight->getDefender());
-                    //this->view->scene->removeItem(nextActionFight->getDefender()->getImagePerso()->parentItem());
                     if (perso) {
                         this->model->getlistMadPersoFixed()->removeAll(perso);
-                        /*QGraphicsItem *itemPerso = this->view->scene->itemAt(QPointF(perso->getPosX()+20, perso->getPosY()+20),
-                                                                             QTransform());*/
+                        this->model->getlistMadPersoMovable()->removeAll(perso);
                         this->view->scene->removeItem(this->view->scene->itemAt(QPointF(perso->getPosX()+20, perso->getPosY()+20),
                                                                                 QTransform()));
-
                         this->model->addPoints(100);
                     }
-                    //nextActionFight->getDefender()->deleteLater();
                 }
-
-
                 S->removeFirstAction();
-
             }
-
-            // Regarder s'il n'y a pas collision
-
-            bool premier = true;
-
-            for (MadPerso *M : *this->model->getlistMadPersoFixed()) {
-
-                if (distanceBetweenPoints(new QPointF(S->getPosX(), S->getPosY()), new QPointF(M->getPosX(), M->getPosY())) < 100) {
-
-                    // Sauvegarder les actions si c'est un déplacement
-                    //S->removeAllActions();
-
-                    if (premier) {
-                        ActionFight *action = new ActionFight(S, M);
-                        S->addActionInFirst(action);
-
-                        /*Image *imageBang = new Image(":/images/bang");
-                        imageBang->setPos(S->getPosX(), S->getPosY());
-                        this->view->scene->addItem(imageBang);
-                        this->model->getlistBang()->append(new Image(":/images/bang"));
-                        QTimer::singleShot(16, this, SLOT(deleteFirstBang()));*/
-
-                        premier = false;
-                    }
-
-                }
-
-            }
-
-            for (ResourceItem *I : *this->model->getlistResourceItem()) {
-
-                if (distanceBetweenPoints(new QPointF(S->getPosX(), S->getPosY()), new QPointF(I->getPosX(), I->getPosY())) < 100) {
-
-                    this->view->scene->removeItem(this->view->scene->itemAt(QPointF(I->getPosX()+20, I->getPosY()+20),
-                                                                            QTransform()));
-                    if (I->getName() == "Wheat") {
-                        this->model->getBagWheats()->addResource(I->getNumber());
-                    }
-                    else if (I->getName() == "Berry") {
-                        this->model->getBagBerries()->addResource(I->getNumber());
-                    }
-                    else if (I->getName() == "Bread") {
-                        this->model->getBagBreads()->addResource(I->getNumber());
-                    }
-                    else if (I->getName() == "Acorn") {
-                        this->model->getBagAcorns()->addResource(I->getNumber());
-                    }
-                    else if (I->getName() == "Sarsaparilla") {
-                        this->model->getBagSarsaparillas()->addResource(I->getNumber());
-                    }
-
-                    this->model->addPoints(2);
-                    this->model->getlistResourceItem()->removeAll(I);
-                }
-
-            }
-
-            premier = true;
-
-            // Si oui retour en arrière et décallage
-            // Puis on regarde les ennemis
         }
+        bool premier = true;
+        for (MadPerso *M : *this->model->getlistMadPersoFixed()) {
+            if (distanceBetweenPoints(new QPointF(S->getPosX(), S->getPosY()), new QPointF(M->getPosX(), M->getPosY())) < 100) {
+                if (premier) {
+                    ActionFight *action = new ActionFight(S, M);
+                    S->addActionInFirst(action);
+                    premier = false;
+                }
+            }
+        }
+        for (MadPerso *M : *this->model->getlistMadPersoMovable()) {
+            if (distanceBetweenPoints(new QPointF(S->getPosX(), S->getPosY()), new QPointF(M->getPosX(), M->getPosY())) < 100) {
+                if (premier) {
+                    ActionFight *action = new ActionFight(S, M);
+                    S->addActionInFirst(action);
+                    premier = false;
+                }
+            }
+        }
+        for (ResourceItem *I : *this->model->getlistResourceItem()) {
+            if (distanceBetweenPoints(new QPointF(S->getPosX(), S->getPosY()), new QPointF(I->getPosX(),
+                                                                                           I->getPosY())) < 100) {
+                this->view->scene->removeItem(this->view->scene->itemAt(QPointF(I->getPosX()+20, I->getPosY()+20),
+                                                                        QTransform()));
+                if (I->getName() == "Wheat") {
+                    this->model->getBagWheats()->addResource(I->getNumber());
+                } else if (I->getName() == "Berry") {
+                    this->model->getBagBerries()->addResource(I->getNumber());
+                } else if (I->getName() == "Bread") {
+                    this->model->getBagBreads()->addResource(I->getNumber());
+                } else if (I->getName() == "Acorn") {
+                    this->model->getBagAcorns()->addResource(I->getNumber());
+                } else if (I->getName() == "Sarsaparilla") {
+                    this->model->getBagSarsaparillas()->addResource(I->getNumber());
+                }
+                this->model->addPoints(2);
+                this->model->getlistResourceItem()->removeAll(I);
+            }
+        }
+        premier = true;
     }
 
-    // MadPerso Immobile
+    // MadPersoFixed
     for (MadPerso *S : *this->model->getlistMadPersoFixed()) {
-
         if (S->hasAction()) {
             ActionFight* nextActionFight = dynamic_cast<ActionFight*>(S->getFirstAction());
-
             if (nextActionFight) {
-
                 if (nextActionFight->getDefender()->getHurt(nextActionFight->getFighter()->getDamage())) {
-                    //qDebug() << "Prend un coup " << QString::number(nextActionFight->getDefender()->getHp());
-
                     NicePerso* perso = dynamic_cast<NicePerso*>(nextActionFight->getDefender());
-                    //this->view->scene->removeItem(nextActionFight->getDefender()->getImagePerso()->parentItem());
                     if (perso) {
                         this->model->getlistNicePerso()->removeAll(perso);
-                        /*QGraphicsItem *itemPerso = this->view->scene->itemAt(QPointF(perso->getPosX()+20, perso->getPosY()+20),
-                                                                             QTransform());*/
                         this->view->scene->removeItem(this->view->scene->itemAt(QPointF(perso->getPosX()+20, perso->getPosY()+20),
                                                                                 QTransform()));
                     }
-                    //nextActionFight->getDefender()->deleteLater();
                 }
-
-
                 S->removeFirstAction();
-
             }
-
-            // Regarder s'il n'y a pas collision
-
-            bool premier = true;
-
-            for (NicePerso *M : *this->model->getlistNicePerso()) {
-
-                if (distanceBetweenPoints(new QPointF(S->getPosX(), S->getPosY()), new QPointF(M->getPosX(), M->getPosY())) < 100) {
-
-                    if (premier) {
-                        ActionFight *action = new ActionFight(S, M);
-                        S->addActionInFirst(action);
-
-                        premier = false;
-                    }
+        }
+        bool premier = true;
+        for (NicePerso *M : *this->model->getlistNicePerso()) {
+            if (distanceBetweenPoints(new QPointF(S->getPosX(), S->getPosY()), new QPointF(M->getPosX(), M->getPosY())) < 100) {
+                if (premier) {
+                    ActionFight *action = new ActionFight(S, M);
+                    S->addActionInFirst(action);
+                    premier = false;
                 }
             }
-
-            premier = true;
         }
+        premier = true;
     }
 
-    // MadPerso Mobile
-    for (MadPerso *S : *this->model->getlistMadPersoMobile()) {
-
+    // MadPerso Movable
+    for (MadPerso *S : *this->model->getlistMadPersoMovable()) {
         if (S->hasAction()) {
             ActionMove* nextActionMove = dynamic_cast<ActionMove*>(S->getFirstAction());
             ActionFight* nextActionFight = dynamic_cast<ActionFight*>(S->getFirstAction());
-
             if (nextActionMove) {
-                // On regarde s'il avance il ne tape pas contre un decor
-                /*if (this->view->scene->itemAt(QPointF(S->getPosX() + nextActionMove->getDepX(), S->getPosY() +
-                                                      nextActionMove->getDepY()), QTransform()) == NULL)
-                    S->setPos(S->getPosX() + nextActionMove->getDepX(), S->getPosY() + nextActionMove->getDepY());*/
-                //qDebug() << "set pos [" << QString::number(nextActionMove->getDepX()) << ";" << QString::number(nextActionMove->getDepY()) << "]";
-                S->setPos(nextActionMove->getDepX() + S->getPosX(), nextActionMove->getDepY() + S->getPosY());
-
-                qDebug() << "pos [" << QString::number(S->getPosX()) << ";" << QString::number(S->getPosY()) << "]";
+                if (this->view->scene->itemAt(QPointF(S->getPosX() + nextActionMove->getDepX(), S->getPosY() +
+                                                      nextActionMove->getDepY()), QTransform()) == NULL) {
+                    S->setPos(S->getPosX() + nextActionMove->getDepX(), S->getPosY() + nextActionMove->getDepY());
+                }
                 S->moveTo(S->getPosX() + nextActionMove->getDepX() + 20, S->getPosY() + nextActionMove->getDepY() + 20);
-
-                qDebug() << "move to [" << QString::number(S->getPosX() + nextActionMove->getDepX()) << ";" << QString::number(S->getPosY() + nextActionMove->getDepY()) << "]";
                 S->removeFirstAction();
+                if (S->getPosX() < 0 || S->getPosY() < 0 || S->getPosX() > 2960 || S->getPosY() > 1960) {
+                    changeMoveMadPerso(nextActionMove, S);
+                }
+                else {
+                    QList<QGraphicsItem *> listCollision = S->getImagePerso()->collidingItems();
 
-                /*QList<QGraphicsItem *> listCollision = S->getImagePerso()->collidingItems();
-
-                for (QGraphicsItem * i : listCollision) {
-
-                    ImageSetting *itemSetting = dynamic_cast<ImageSetting *>(i);
-
-                    if (itemSetting) {
-
-                        //QPointF *pointDestination = S->getDestination();
-                        //S->removeAllActions();
-
-                        //QPointF *pointSuivant = new QPointF(S->getPosX(), S->getPosY());
-
-                        //qDebug() << "point SUivant 1 [" << pointSuivant->x() << ";" << pointSuivant->y() << "]";
-
-                        //S->setPos(S->getPosX() - nextAction->getDepX(), S->getPosY() - nextAction->getDepY());
-
-                        //QPointF *pointOrigine = new QPointF(S->getPosX()-nextActionMove->getDepX(),S->getPosY()-nextActionMove->getDepY());
-
-                        //qDebug() << "point Origine [" << pointOrigine->x() << ";" << pointOrigine->y() << "]";
-
-                        //pointSuivant = this->getPointDecale(pointOrigine, pointSuivant);
-
-                        //qDebug() << "point SUivant 2 [" << pointSuivant->x() << ";" << pointSuivant->y() << "]";
-
-                        //delete nextAction;
-
-                        S->setPos(nextActionMove->getDepX(), nextActionMove->getDepY());
-                        S->moveTo(S->getPosX() + nextActionMove->getDepX(), S->getPosY() + nextActionMove->getDepY());
-
-
+                    for (QGraphicsItem * i : listCollision) {
+                        ImageSetting *itemSetting = dynamic_cast<ImageSetting *>(i);
+                        if (itemSetting) {
+                            changeMoveMadPerso(nextActionMove, S);
+                        }
                     }
-
-                }*/
+                }
+                delete nextActionMove;
             }
             else if (nextActionFight) {
-
                 if (nextActionFight->getDefender()->getHurt(nextActionFight->getFighter()->getDamage())) {
-                    //qDebug() << "Prend un coup " << QString::number(nextActionFight->getDefender()->getHp());
-
                     NicePerso* perso = dynamic_cast<NicePerso*>(nextActionFight->getDefender());
-                    //this->view->scene->removeItem(nextActionFight->getDefender()->getImagePerso()->parentItem());
                     if (perso) {
                         this->model->getlistNicePerso()->removeAll(perso);
-                        /*QGraphicsItem *itemPerso = this->view->scene->itemAt(QPointF(perso->getPosX()+20, perso->getPosY()+20),
-                                                                             QTransform());*/
                         this->view->scene->removeItem(this->view->scene->itemAt(QPointF(perso->getPosX()+20, perso->getPosY()+20),
                                                                                 QTransform()));
                     }
-                    //nextActionFight->getDefender()->deleteLater();
                 }
-
-
                 S->removeFirstAction();
-
             }
-
-            // Regarder s'il n'y a pas collision
-
             bool premier = true;
 
-            for (MadPerso *M : *this->model->getlistMadPersoFixed()) {
-
+            for (NicePerso *M : *this->model->getlistNicePerso()) {
                 if (distanceBetweenPoints(new QPointF(S->getPosX(), S->getPosY()), new QPointF(M->getPosX(), M->getPosY())) < 100) {
-
-                    // Sauvegarder les actions si c'est un déplacement
-                    //S->removeAllActions();
-
                     if (premier) {
                         ActionFight *action = new ActionFight(S, M);
                         S->addActionInFirst(action);
-
-                        /*Image *imageBang = new Image(":/images/bang");
-                        imageBang->setPos(S->getPosX(), S->getPosY());
-                        this->view->scene->addItem(imageBang);
-                        this->model->getlistBang()->append(new Image(":/images/bang"));
-                        QTimer::singleShot(16, this, SLOT(deleteFirstBang()));*/
-
                         premier = false;
                     }
-
                 }
-
             }
-
-            /*for (ResourceItem *I : *this->model->getlistResourceItem()) {
-
-                if (distanceBetweenPoints(new QPointF(S->getPosX(), S->getPosY()), new QPointF(I->getPosX(), I->getPosY())) < 100) {
-
-                    this->view->scene->removeItem(this->view->scene->itemAt(QPointF(I->getPosX()+20, I->getPosY()+20),
-                                                                            QTransform()));
-                    if (I->getName() == "Wheat") {
-                        this->model->getBagWheats()->addResource(I->getNumber());
-                    }
-                    else if (I->getName() == "BErry") {
-                        this->model->getBagBerries()->addResource(I->getNumber());
-                    }
-                    else if (I->getName() == "Bread") {
-                        this->model->getBagBreads()->addResource(I->getNumber());
-                    }
-                    else if (I->getName() == "Acorn") {
-                        this->model->getBagAcorns()->addResource(I->getNumber());
-                    }
-                    else if (I->getName() == "Sarsaparilla") {
-                        this->model->getBagSarsaparillas()->addResource(I->getNumber());
-                    }
-
-                    this->model->getlistResourceItem()->removeAll(I);
-                }
-
-            }*/
-
             premier = true;
-
-            // Si oui retour en arrière et décallage
-            // Puis on regarde les ennemis
         }
-
     }
-
 }
 
-void Controller::checkMadPerso() {
+void Controller::changeMoveMadPerso(ActionMove *action, MadPerso *S) {
+    std::random_device rd;
+    std::mt19937_64 gen(rd());
+    std::uniform_int_distribution<unsigned long long> dis;
 
+    S->removeAllActions();
+    int alea2 = dis(gen) % 100;
+    if (alea2 > 66) {
+        S->moveTo(S->getPosX() + action->getDepX() + 20, S->getPosY() + (action->getDepY() * -1) + 20);
+    } else if (alea2 > 33){
+        S->moveTo(S->getPosX() + (action->getDepX() * -1) + 20, S->getPosY() + action->getDepY() + 20);
+    } else {
+        S->moveTo(S->getPosX() + (action->getDepX() * -1) + 20, S->getPosY() + (action->getDepY() * -1) + 20);
+    }
+}
+
+void Controller::checkMadPersoFixed() {
     for (QPointF *point : *this->model->getlistSpotMadPersoFixed()) {
-        MadPerso *perso = new MadPerso(point->x(), point->y());
+        MadPerso *perso = new MadPerso(point->x(), point->y(), 1, 50, 0);
         if (!this->containsMadPersoFixed(perso)) {
             this->model->addMadPersoFixed(perso);
             this->view->scene->addItem(perso->getImagePerso());
         }
     }
+}
 
+void Controller::checkMadPersoMovable() {
+    if (this->model->getlistMadPersoMovable()->size() < this->model->getNbMaxMadPersoMovable()) {
+        int *tabAlea = new int[this->model->getlistSpotMadPersoMovable()->size()];
+        for (int i=0; i<this->model->getlistSpotMadPersoMovable()->size(); i++) {
+            tabAlea[i]=i;
+        }
+        for (int i=0; i<this->model->getlistSpotMadPersoMovable()->size(); i++) {
+            int nb = (rand() % (this->model->getlistSpotMadPersoMovable()->size()-1)) + 1;
+            int tmp = tabAlea[i];
+            tabAlea[i] = tabAlea[nb];
+            tabAlea[nb] = tmp;
+        }
+        for (int i=0; i<(this->model->getNbMaxMadPersoMovable() - this->model->getlistMadPersoMovable()->size()); i++) {
+            MadPerso *perso = new MadPerso(this->model->getlistSpotMadPersoMovable()->at(tabAlea[i])->x(),
+                                           this->model->getlistSpotMadPersoMovable()->at(tabAlea[i])->y(), 2, 100, 1);
+            this->model->addMadPersoMovable(perso);
+            perso->moveTo(perso->getPosX() + 21, perso->getPosY() + 21);
+            this->view->scene->addItem(perso->getImagePerso());
+        }
+    }
+}
+
+void Controller::checkResources() {
+    for (int y=0; y<this->model->getlistSpotResourceItem()->size(); y++) {
+        int *tabAlea = new int[this->model->getlistSpotResourceItem()->size()];
+        for (int i=0; i<this->model->getlistSpotResourceItem()->size(); i++) {
+            tabAlea[i]=i;
+        }
+        for (int i=0; i<this->model->getlistSpotMadPersoMovable()->size(); i++) {
+            int nb = (rand() % (10-1)) + 1;
+            int tmp = tabAlea[i];
+            tabAlea[i] = tabAlea[nb];
+            tabAlea[nb] = tmp;
+        }
+        QPointF *point = new QPointF(this->model->getlistSpotResourceItem()->at(y)->x(),
+                                     this->model->getlistSpotResourceItem()->at(y)->y());
+        if (this->view->scene->itemAt(point->x() + 15, point->y() + 15, QTransform()) == NULL) {
+            if (tabAlea[y] > 9) {
+                this->model->addResourceItem(new ResourceItem("Sarsaparilla", ((rand() % 3) + 1),
+                                                              new ImageSetting(":/images/salsepareille"),point->x(), point->y()));
+            } else if (tabAlea[y] > 6) {
+                this->model->addResourceItem(new ResourceItem("Wheat", ((rand() % 3) + 1), new ImageSetting(":/images/ble"),
+                                                                point->x(), point->y()));
+            } else if (tabAlea[y] > 3) {
+                this->model->addResourceItem(new ResourceItem("Acorn", ((rand() % 3) + 1), new ImageSetting(":/images/noisette"),
+                                                                point->x(), point->y()));
+            } else if (tabAlea[y] > 0) {
+                this->model->addResourceItem(new ResourceItem("Berry", ((rand() % 3) + 1), new ImageSetting(":/images/baie"),
+                                                                point->x(), point->y()));
+            }
+            this->view->scene->addItem(this->model->getlistResourceItem()->last()->getImageItem());
+        }
+    }
 }
 
 int Controller::distanceBetweenPoints(QPointF *p1, QPointF *p2) {
@@ -691,20 +573,37 @@ int Controller::distanceBetweenPoints(QPointF *p1, QPointF *p2) {
 }
 
 QPointF *Controller::getPointDecale(QPointF *beginningPoint, QPointF *nextPoint) {
-
     QPointF *newPoint = new QPointF;
     double rayon = sqrt(pow((beginningPoint->x() - nextPoint->x()), 2) + pow((beginningPoint->y() - nextPoint->y()), 2));
-
     newPoint->setX(beginningPoint->x() + (rayon * sin(M_PI + (M_PI / 3))));
     newPoint->setY(beginningPoint->y() + (rayon * cos(M_PI + (M_PI / 3))));
-
     return newPoint;
-
 }
 
-
 void Controller::actionPerso(int x, int y, int nbS) {
-    this->model->actionPerso(x, y, nbS);
+    for (int i=0; i<this->model->getlistNicePerso()->size(); i++) {
+        int a = x-(this->model->getlistNicePerso()->at(i)->getPosX());
+        int b = y-(this->model->getlistNicePerso()->at(i)->getPosY());
+        float distance = sqrt(pow(a,2)+pow(b,2));
+        this->model->getlistNicePerso()->at(i)->setDistancePositionClicked(distance);
+    }
+    QList<NicePerso *> *listSorted = this->model->getlistNicePerso();
+    for (int i=(listSorted->size()-1); i>0; i--) {
+        for (int j=0; j<(i); j++) {
+            if (listSorted->at(j+1)->getDistancePositionClicked() < listSorted->at(j)->getDistancePositionClicked()) {
+                listSorted->swap(j+1,j);
+            }
+        }
+    }
+    int cptSLibre=0;
+    int cptS=0;
+    while (cptSLibre < nbS) {
+        if (listSorted->at(cptS)->isFree()) {
+            listSorted->at(cptS)->moveTo(x, y);
+            cptSLibre++;
+        }
+        cptS++;
+    }
 }
 
 int Controller::getNumberFreePerso() {
@@ -713,19 +612,14 @@ int Controller::getNumberFreePerso() {
 
 QList<NicePerso *> *Controller::getlistNicePerso() {
     QList<NicePerso *> *listSorted = this->model->getlistNicePerso();
-
     for (int i=(listSorted->size()-1); i>0; i--) {
         for (int j=0; j<(i); j++) {
-            if ( (listSorted->at(j+1)->getHpMax() - listSorted->at(j+1)->getHp()) > (listSorted->at(j)->getHpMax() - listSorted->at(j)->getHp()) ) {
+            if ((listSorted->at(j+1)->getHpMax() - listSorted->at(j+1)->getHp()) >
+                    (listSorted->at(j)->getHpMax() - listSorted->at(j)->getHp()) ) {
                 listSorted->swap(j+1,j);
             }
         }
     }
-
-    /*for (int i=0; i<listSorted->size(); i++) {
-        qDebug() << " i = " << i << "getHpMax : " << listSorted->at(i)->getHpMax() << " PV : " << listSorted->at(i)->getHp();
-    }*/
-
     return listSorted;
 }
 
@@ -741,8 +635,7 @@ void Controller::sellWheat(int nbWheat) {
 void Controller::farmerUp(int cout) {
     if (!this->model->getBagSarsaparillas()->removeResource(cout)) {
         this->view->displayMistakeMoney();
-    }
-    else {
+    } else {
         this->model->farmerUp(1);
         this->model->addPoints(50);
     }
@@ -751,8 +644,7 @@ void Controller::farmerUp(int cout) {
 void Controller::makeBread(int nbBread) {
     if (!this->model->getBagSarsaparillas()->removeResource(nbBread * this->getCostProductionBread())) {
         this->view->displayMistakeMoney();
-    }
-    else {
+    } else {
         this->model->useWheat(nbBread * 2);
         this->model->makeBread(nbBread);
         this->model->addPoints(1);
@@ -762,8 +654,7 @@ void Controller::makeBread(int nbBread) {
 void Controller::bakerUp(int cout) {
     if (!this->model->getBagSarsaparillas()->removeResource(cout)) {
         this->view->displayMistakeMoney();
-    }
-    else {
+    } else {
         this->model->bakerUp(1);
         this->model->addPoints(50);
     }
@@ -773,8 +664,7 @@ void Controller::creationNewSmurf(int cout) {
 
     if (!this->model->getBagSarsaparillas()->removeResource(cout)) {
         this->view->displayMistakeMoney();
-    }
-    else {
+    } else {
         QPointF *point = this->getFreeSpawnNicePerso();
         NicePerso *perso = new NicePerso(point->x(), point->y(), this->model->getHpHefty(), this->model->getHpHefty(),
                                          this->model->getDamageHefty(), this->model->getSpeedHefty());
@@ -787,8 +677,7 @@ void Controller::creationNewSmurf(int cout) {
 void Controller::heftyUp(int cout) {
     if (!this->model->getBagSarsaparillas()->removeResource(cout)) {
         this->view->displayMistakeMoney();
-    }
-    else {
+    } else {
         this->model->heftyUp(1);
         this->model->addPoints(50);
     }
@@ -797,22 +686,18 @@ void Controller::heftyUp(int cout) {
 QPointF *Controller::getFreeSpawnNicePerso() {
 
     int *tabAlea = new int[this->model->getlistSpawnNicePerso()->size()];
-
     for (int i=0; i<this->model->getlistSpawnNicePerso()->size(); i++) {
         tabAlea[i]=i;
     }
-
     for (int i=0; i<this->model->getlistSpawnNicePerso()->size(); i++) {
         int nb = (rand() % (this->model->getlistSpawnNicePerso()->size()-1)) + 1;
         int tmp = tabAlea[i];
         tabAlea[i] = tabAlea[nb];
         tabAlea[nb] = tmp;
     }
-
     for (int y=0; y<this->model->getlistSpawnNicePerso()->size(); y++) {
 
         QPointF *point = this->model->getlistSpawnNicePerso()->at(tabAlea[y]);
-
         QList<NicePerso *> *listPerso = this->model->getlistNicePerso();
         int i=0;
 
@@ -821,16 +706,14 @@ QPointF *Controller::getFreeSpawnNicePerso() {
                || (listPerso->at(i)->getPosY() > (point->y() + 5) || listPerso->at(i)->getPosY() < (point->y() - 5)))) {
             i++;
         }
-
         if (i==listPerso->size()) {
             i = 0;
-            QList<MadPerso *> *listPerso2 = this->model->getlistMadPersoMobile();
+            QList<MadPerso *> *listPerso2 = this->model->getlistMadPersoMovable();
             while ((i < listPerso2->size())
                    && ((listPerso2->at(i)->getPosX() > (point->x() + 5) || listPerso2->at(i)->getPosX() < (point->x() - 5))
                    || (listPerso2->at(i)->getPosY() > (point->y() + 5) || listPerso2->at(i)->getPosY() < (point->y() - 5)))) {
                 i++;
             }
-
             if (i==listPerso2->size()) {
                 return point;
             }
@@ -846,8 +729,157 @@ bool Controller::containsMadPersoFixed(MadPerso *perso) {
             return true;
         }
     }
-
     return false;
+}
+
+void Controller::fillListResource() {
+    this->model->addListSpotResource(new QPointF(100,600));
+    this->model->addListSpotResource(new QPointF(70,300));
+    this->model->addListSpotResource(new QPointF(450,450));
+    this->model->addListSpotResource(new QPointF(250,1000));
+    this->model->addListSpotResource(new QPointF(100,1450));
+    this->model->addListSpotResource(new QPointF(700,900));
+    this->model->addListSpotResource(new QPointF(725,1900));
+    this->model->addListSpotResource(new QPointF(1450,1850));
+    this->model->addListSpotResource(new QPointF(1700,1750));
+    this->model->addListSpotResource(new QPointF(2100,1950));
+    this->model->addListSpotResource(new QPointF(2950,1950));
+    this->model->addListSpotResource(new QPointF(2700,1800));
+    this->model->addListSpotResource(new QPointF(2900,1550));
+    this->model->addListSpotResource(new QPointF(2300,1475));
+    this->model->addListSpotResource(new QPointF(2000,1500));
+    this->model->addListSpotResource(new QPointF(2000,1325));
+    this->model->addListSpotResource(new QPointF(1400,1325));
+    this->model->addListSpotResource(new QPointF(800,1275));
+    this->model->addListSpotResource(new QPointF(2500,1050));
+    this->model->addListSpotResource(new QPointF(2950,950));
+    this->model->addListSpotResource(new QPointF(2350,825));
+    this->model->addListSpotResource(new QPointF(1850,850));
+    this->model->addListSpotResource(new QPointF(1450,550));
+    this->model->addListSpotResource(new QPointF(950,625));
+    this->model->addListSpotResource(new QPointF(800,400));
+    this->model->addListSpotResource(new QPointF(1150,300));
+    this->model->addListSpotResource(new QPointF(1200,50));
+    this->model->addListSpotResource(new QPointF(1850,10));
+    this->model->addListSpotResource(new QPointF(2450,50));
+    this->model->addListSpotResource(new QPointF(2300,350));
+    this->model->addListSpotResource(new QPointF(2925,25));
+    this->model->addListSpotResource(new QPointF(2350,550));
+}
+
+void Controller::fillListSpawnNicePerso() {
+    this->model->addListSpawnNicePerso(new QPointF(880,740));
+    this->model->addListSpawnNicePerso(new QPointF(840,780));
+    this->model->addListSpawnNicePerso(new QPointF(810,840));
+    this->model->addListSpawnNicePerso(new QPointF(785,895));
+    this->model->addListSpawnNicePerso(new QPointF(815,950));
+    this->model->addListSpawnNicePerso(new QPointF(850,1000));
+    this->model->addListSpawnNicePerso(new QPointF(870,1050));
+    this->model->addListSpawnNicePerso(new QPointF(920,1100));
+    this->model->addListSpawnNicePerso(new QPointF(965,1135));
+    this->model->addListSpawnNicePerso(new QPointF(1030,1175));
+    this->model->addListSpawnNicePerso(new QPointF(1100,1170));
+    this->model->addListSpawnNicePerso(new QPointF(1170,1150));
+    this->model->addListSpawnNicePerso(new QPointF(1240,1150));
+    this->model->addListSpawnNicePerso(new QPointF(1300,1160));
+    this->model->addListSpawnNicePerso(new QPointF(1360,1150));
+    this->model->addListSpawnNicePerso(new QPointF(1430,1160));
+    this->model->addListSpawnNicePerso(new QPointF(1490,1140));
+    this->model->addListSpawnNicePerso(new QPointF(1540,1090));
+    this->model->addListSpawnNicePerso(new QPointF(1610,1070));
+    this->model->addListSpawnNicePerso(new QPointF(1670,1050));
+    this->model->addListSpawnNicePerso(new QPointF(1720,1010));
+    this->model->addListSpawnNicePerso(new QPointF(1740,960));
+    this->model->addListSpawnNicePerso(new QPointF(1750,900));
+    this->model->addListSpawnNicePerso(new QPointF(1740,830));
+    this->model->addListSpawnNicePerso(new QPointF(1720,770));
+    this->model->addListSpawnNicePerso(new QPointF(1700,720));
+    this->model->addListSpawnNicePerso(new QPointF(1660,660));
+    this->model->addListSpawnNicePerso(new QPointF(1600,640));
+    this->model->addListSpawnNicePerso(new QPointF(1530,620));
+    this->model->addListSpawnNicePerso(new QPointF(1460,600));
+    this->model->addListSpawnNicePerso(new QPointF(1400,590));
+    this->model->addListSpawnNicePerso(new QPointF(1330,600));
+    this->model->addListSpawnNicePerso(new QPointF(1255,610));
+    this->model->addListSpawnNicePerso(new QPointF(1190,620));
+    this->model->addListSpawnNicePerso(new QPointF(1120,600));
+    this->model->addListSpawnNicePerso(new QPointF(1050,630));
+    this->model->addListSpawnNicePerso(new QPointF(990,665));
+    this->model->addListSpawnNicePerso(new QPointF(920,700));
+    this->model->addListSpawnNicePerso(new QPointF(880,740));
+}
+
+void Controller::fillListSpotMadPersoFixed() {
+    this->model->addListSpotMadPersoFixed(new QPointF(300, 50));
+    this->model->addListSpotMadPersoFixed(new QPointF(650, 300));
+    this->model->addListSpotMadPersoFixed(new QPointF(950, 250));
+    this->model->addListSpotMadPersoFixed(new QPointF(1450, 250));
+    this->model->addListSpotMadPersoFixed(new QPointF(2150, 25));
+    this->model->addListSpotMadPersoFixed(new QPointF(2140, 250));
+    this->model->addListSpotMadPersoFixed(new QPointF(2500, 280));
+    this->model->addListSpotMadPersoFixed(new QPointF(2850, 300));
+    this->model->addListSpotMadPersoFixed(new QPointF(300, 1100));
+    this->model->addListSpotMadPersoFixed(new QPointF(625, 1300));
+    this->model->addListSpotMadPersoFixed(new QPointF(300, 1600));
+    this->model->addListSpotMadPersoFixed(new QPointF(225, 1900));
+    this->model->addListSpotMadPersoFixed(new QPointF(900, 1625));
+    this->model->addListSpotMadPersoFixed(new QPointF(1500, 1650));
+    this->model->addListSpotMadPersoFixed(new QPointF(1700, 1300));
+    this->model->addListSpotMadPersoFixed(new QPointF(2700, 625));
+    this->model->addListSpotMadPersoFixed(new QPointF(2650, 875));
+    this->model->addListSpotMadPersoFixed(new QPointF(2175, 1150));
+    this->model->addListSpotMadPersoFixed(new QPointF(2650, 1200));
+    this->model->addListSpotMadPersoFixed(new QPointF(2650, 1475));
+}
+
+void Controller::fillListSpotMadPersoMovable() {
+    this->model->addListSpotMadPersoMovable(new QPointF(270, 470));
+    this->model->addListSpotMadPersoMovable(new QPointF(100, 900));
+    this->model->addListSpotMadPersoMovable(new QPointF(700, 1600));
+    this->model->addListSpotMadPersoMovable(new QPointF(1950, 1800));
+    this->model->addListSpotMadPersoMovable(new QPointF(2800, 1700));
+    this->model->addListSpotMadPersoMovable(new QPointF(2800, 1050));
+    this->model->addListSpotMadPersoMovable(new QPointF(2400, 620));
+    this->model->addListSpotMadPersoMovable(new QPointF(1800, 350));
+}
+
+void Controller::fillListAdvicePapaSmurf() {
+    this->model->addMessageListAdvicePapaSmurf(tr("Je veille chaque jour à ce que \nmes petits Schtroumpfs ne \nmanquent de rien !"));
+    this->model->addMessageListAdvicePapaSmurf(tr("Aller en foret te permettra de \ntrouver de la nouriture \npour le village."));
+    this->model->addMessageListAdvicePapaSmurf(tr("Le blé permet au Schtroumpf \nBoulanger de faire du pain."));
+    this->model->addMessageListAdvicePapaSmurf(tr("La salsepareille est un élément \nessentiel pour les Schtroumpfs."));
+    this->model->addMessageListAdvicePapaSmurf(tr("Prend garde aux \nSchtroumpfs noirs !"));
+    this->model->addMessageListAdvicePapaSmurf(tr("Prend garde à la réserve \nde nourriture, l'hiver \napproche à grand schtroumpf."));
+    this->model->addMessageListAdvicePapaSmurf(tr("Clique sur la maison du \nSchtroumpf Paysan \npour récolter du blé."));
+    this->model->addMessageListAdvicePapaSmurf(tr("Clique sur la maison du \nSchtroumpf Boulanger \npour fabriquer le pain."));
+    this->model->addMessageListAdvicePapaSmurf(tr("Le Schtroumpf Costaud t'aide \nà améliorer les Schtroumpfs."));
+    this->model->addMessageListAdvicePapaSmurf(tr("Docteur Schtroumpf va soigner \nles Schtroumpfs grace à la nourriture : "
+                                                  "\n\t1 pain = ") + QString::number(this->model->getBagBreads()->getHealth()) +
+                                               tr(" PV \n\t1 baie = ") + QString::number(this->model->getBagBerries()->getHealth()) +
+                                               tr(" PV \n\t1 gland = ") + QString::number(this->model->getBagAcorns()->getHealth()) +
+                                               tr(" PV."));
+    this->model->addMessageListAdvicePapaSmurf(tr("La maison souche est la réserve. \nClique dessus et elle t'indiquera \n"
+                                                  "ce que tu possèdes."));
+    this->model->addMessageListAdvicePapaSmurf(tr("Schtroumpf à Lunettes, \noù en sont les Schtroumpfs ?"));
+}
+
+void Controller::fillListAdviceSmurfette() {
+    this->model->addMessageListAdviceSmurfette(tr("Schtroumpf journée pour \nune promenade !"));
+    this->model->addMessageListAdviceSmurfette(tr("Schtroumpfera bien qui \nSchtroumpfera le dernier !"));
+    this->model->addMessageListAdviceSmurfette(tr("Le Schtroumpf Bricoleur sait \ntoujours comment nous aider."));
+    this->model->addMessageListAdviceSmurfette(tr("\"Comme le dit toujours \nle Grand Schtroumpf...\", \n"
+                                                  "Pff il est schtroumpfement pénible \nle Schtroumpf à Lunettes..."));
+    this->model->addMessageListAdviceSmurfette(tr("Ah non, Schtroumpf à Lunettes... \nNe recommence pas avec tes \n"
+                                                  "réflexions schtroumpfistes !"));
+    this->model->addMessageListAdviceSmurfette(tr("Waouh! Qu'il est fort\nle Schtroumpf Costaud !"));
+    this->model->addMessageListAdviceSmurfette(tr("Des noix ! Toujours des noix ! \nJe me demande ce qu’il peut \nbien schtroumpfer \n"
+                                                  "avec toutes ces noix ?..."));
+    this->model->addMessageListAdviceSmurfette(tr("Schtroumpf Grognon, tu ne veux \npas schtroumpfer à la balle, \n"
+                                                  "tu ne veux pas schtroumpfer du \ngâteau ni de la musique ! \nTu n’aimes donc rien ?"));
+    this->model->addMessageListAdviceSmurfette(tr("Schtroumpfs Boulanger, \nSchtroumpf Patissier, \nvous mettez du soleil dans \n"
+                                                  "le coeur des Schtroumpfs !"));
+    this->model->addMessageListAdviceSmurfette(tr("Le chemin du village est un \nsecret bien schtroumpfé ! \nGargamel ne pourra pas \n"
+                                                  "nous trouver!"));
 }
 
 QGraphicsTextItem *Controller::getMessagePapaSmurf() {
@@ -856,19 +888,19 @@ QGraphicsTextItem *Controller::getMessagePapaSmurf() {
     int random = (rand() % (MAX - MIN + 1)) + MIN;
     QGraphicsTextItem *texteItem = new QGraphicsTextItem(this->model->getMessagePapaSmurf(random));
     texteItem->setPos(this->getVillagePosX() + 155, this->getVillagePosY() - 80);
-
     return texteItem;
 }
 
 QGraphicsTextItem *Controller::getMessageSmurfette() {
     int MIN = 0;
+    qDebug() << "size : " << QString::number(this->model->getlistAdviceSmurfette()->size());
     int MAX = this->model->getlistAdviceSmurfette()->size()-1;
     int random = (rand() % (MAX - MIN + 1)) + MIN;
     QGraphicsTextItem *texteItem = new QGraphicsTextItem(this->model->getMessageSmurfette(random));
     texteItem->setPos(this->getVillagePosX() + 200, this->getVillagePosY() - 110);
-
     return texteItem;
 }
+
 QGraphicsTextItem *Controller::getMessageBrainy() {
     QString texte = "";
     texte += tr("    Schtroumpf Paysan: niveau ") + QString::number(this->getLevelFarmer());
@@ -882,10 +914,8 @@ QGraphicsTextItem *Controller::getMessageBrainy() {
     texte += tr("\nVitesse d'un nouveau Schtroumpf : ") + QString::number(this->getSpeedS());
     texte += tr("\nDegats d'un nouveau Schtroumpf : ") + QString::number(this->getDamageS());
     texte += tr("\nPV d'un nouveau Schtroumpf : ") + QString::number(this->getHpS());
-
     QGraphicsTextItem *texteItem = new QGraphicsTextItem(texte);
     texteItem->setPos(this->getVillagePosX() - 40, this->getVillagePosY() - 205);
-
     return texteItem;
 }
 
@@ -894,11 +924,13 @@ Image *Controller::getImageBubblePapaSmurf() {
     imageBubble->setPos(this->getVillagePosX() + 80, this->getVillagePosY() - 190);
     return imageBubble;
 }
+
 Image *Controller::getImageBubbleSmurfette() {
     Image *imageBubble = this->model->getImageBubbleSmurfette();
     imageBubble->setPos(this->getVillagePosX() + 125, this->getVillagePosY() - 210);
     return imageBubble;
 }
+
 Image *Controller::getImageBubbleBrainy() {
     Image *imageBubble = this->model->getImageBubbleBrainy();
     imageBubble->setPos(this->getVillagePosX() - 75, this->getVillagePosY() - 245);
@@ -910,38 +942,29 @@ Image *Controller::getImagePapaSmurf() {
      imagePapaSmurf->setPos(this->getVillagePosX() + 370, this->getVillagePosY() - 180);
      return imagePapaSmurf;
 }
+
 Image *Controller::getImageSmurfette() {
     Image *imageSmurfette = this->model->getImageSmurfette();
     imageSmurfette->setPos(this->getVillagePosX() + 370, this->getVillagePosY() - 180);
     return imageSmurfette;
 }
+
 Image *Controller::getImageBrainy() {
     Image *imageBrainy = this->model->getImageBrainy();
     imageBrainy->setPos(this->getVillagePosX() + 200, this->getVillagePosY() - 175);
     return imageBrainy;
 }
 
-int Controller::setTreatment(int i) {
-    int treatment = this->getlistNicePerso()->at(i)->getHpMax() - this->getlistNicePerso()->at(i)->getHp();
-    return this->treatment = treatment;
-}
-int Controller::getMaxBreadForTreatment() {
-    return getTreatment()/getHealthBread();
-}
-int Controller::getMaxBerriesForTreatment() {
-    return getTreatment()/getHealthBerries();
-}
-int Controller::getMaxAcornForTreatment() {
-    return getTreatment()/getHealthAcorn();
+int Controller::getTreatment(int i) {
+    return this->getlistNicePerso()->at(i)->getHpMax() - this->getlistNicePerso()->at(i)->getHp();
 }
 
 void Controller::treat(int i, int nbBreads, int nbBerries, int nbAcorns) {
     int hpGettingBack = (getHealthBread() * nbBreads) + (getHealthBerries() * nbBerries) + (getHealthAcorn() * nbAcorns);
-    if (hpGettingBack <= getTreatment()) {
+    if (hpGettingBack <= getTreatment(i)) {
         this->getlistNicePerso()->at(i)->heal(hpGettingBack);
-    }
-    else {
-        this->getlistNicePerso()->at(i)->heal(getTreatment());
+    } else {
+        this->getlistNicePerso()->at(i)->heal(getTreatment(i));
     }
     this->model->getBagBreads()->removeResource(nbBreads);
     this->model->getBagBerries()->removeResource(nbBerries);

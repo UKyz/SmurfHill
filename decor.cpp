@@ -2,16 +2,14 @@
 #include "view.h"
 
 Setting::Setting(QString type, int posX, int posY, View *view): QObject() {
-
     this->type = type;
     this->posX = posX;
     this->posY = posY;
     this->view = view;
-
 }
 
 Village::Village(QString type, int posX, int posY, View *view): Setting(type, posX, posY, view) {
-
+    // Houses
     this->house1 = new ImageSetting(":/images/maisonS1");
     this->house2 = new ImageSetting(":/images/maisonS2");
     this->house3 = new ImageSetting(":/images/maisonS3");
@@ -35,7 +33,7 @@ Village::Village(QString type, int posX, int posY, View *view): Setting(type, po
     this->mill = new ImageSetting(":/images/moulinS");
     this->well = new ImageSetting(":/images/puits");
     this->inventory = new ImageSetting(":/images/reserveS");
-
+    // Trees
     this->tree1 = new ImageSetting(":/images/arbre9");
     this->tree2 = new ImageSetting(":/images/arbre9");
     this->tree3 = new ImageSetting(":/images/arbre9");
@@ -51,7 +49,7 @@ Village::Village(QString type, int posX, int posY, View *view): Setting(type, po
     this->tree13 = new ImageSetting(":/images/arbre9");
     this->tree14 = new ImageSetting(":/images/arbre9");
     this->tree15 = new ImageSetting(":/images/arbre9");
-
+    // Bush
     this->bush1 = new ImageSetting(":/images/buisson1");
     this->bush2 = new ImageSetting(":/images/buisson1");
     this->bush3 = new ImageSetting(":/images/buisson1");
@@ -124,11 +122,7 @@ Village::Village(QString type, int posX, int posY, View *view): Setting(type, po
 
 }
 
-Forest::Forest(QString type, int posX, int posY, View *view): Setting(type, posX, posY, view) {
-}
-
 Forest1::Forest1(QString type, int posX, int posY, View *view): Forest(type, posX, posY, view) {
-
     this->tree1 = new ImageSetting(":/images/arbre1");
     this->tree2 = new ImageSetting(":/images/arbre1");
     this->tree3 = new ImageSetting(":/images/arbre1");
@@ -248,7 +242,6 @@ Forest2::Forest2(QString type, int posX, int posY, View *view): Forest(type, pos
 }
 
 Forest3::Forest3(QString type, int posX, int posY, View *view): Forest(type, posX, posY, view) {
-
     this->tree01 = new ImageSetting(":/images/arbre7");
     this->tree02 = new ImageSetting(":/images/arbre7");
     this->tree1 = new ImageSetting(":/images/arbre10");
@@ -314,7 +307,6 @@ Forest3::Forest3(QString type, int posX, int posY, View *view): Forest(type, pos
 }
 
 Forest4::Forest4(QString type, int posX, int posY, View *view): Forest(type, posX, posY, view) {
-
     this->tree1 = new ImageSetting(":/images/arbreM1");
     this->tree2 = new ImageSetting(":/images/arbreM4");
     this->tree3 = new ImageSetting(":/images/arbreM3");
@@ -402,7 +394,6 @@ Forest4::Forest4(QString type, int posX, int posY, View *view): Forest(type, pos
 }
 
 Forest5::Forest5(QString type, int posX, int posY, View *view): Forest(type, posX, posY, view) {
-
     this->tree1 = new ImageSetting(":/images/arbre9");
     this->tree2 = new ImageSetting(":/images/arbre8");
     this->tree3 = new ImageSetting(":/images/arbre9");
@@ -482,7 +473,6 @@ Forest5::Forest5(QString type, int posX, int posY, View *view): Forest(type, pos
 }
 
 Forest6::Forest6(QString type, int posX, int posY, View *view): Forest(type, posX, posY, view) {
-
     this->tree1 = new ImageSetting(":/images/arbre7");
     this->tree2 = new ImageSetting(":/images/arbre7");
     this->tree3 = new ImageSetting(":/images/arbre10");
@@ -552,7 +542,6 @@ Forest6::Forest6(QString type, int posX, int posY, View *view): Forest(type, pos
 }
 
 Forest7::Forest7(QString type, int posX, int posY, View *view): Forest(type, posX, posY, view) {
-
     this->tree1 = new ImageSetting(":/images/arbre1");
     this->tree2 = new ImageSetting(":/images/arbre1");
     this->tree3 = new ImageSetting(":/images/arbre1");

@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QTranslator>
+#include <QSettings>
 
 int main(int argc, char *argv[])
 {
@@ -18,11 +19,17 @@ int main(int argc, char *argv[])
     Model m;
     Controller *c = new Controller(&m, &w);
 
-    QTranslator translator;
-    translator.load("smurfHill_en_EN");
-    a.installTranslator(&translator);
+    QTranslator t;
+    QString locale;
+    QSettings s("ESME", "smurfHill");
+    QVariant v = s.value("lang");
+    if (v.isValid())
+        locale = v.toString();
+    else
+        locale = QLocale::system().name();
+    if(t.load("C:/Users/Alexia/Documents/ihm/smurfHill_" + locale))
+         a.installTranslator(&t);
 
     w.show();
-
     return a.exec();
 }

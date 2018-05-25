@@ -8,38 +8,26 @@
 class View;
 class ImageSetting;
 
-class Setting : public QObject
-{
-
+class Setting : public QObject {
     Q_OBJECT
-
     public:
-
         Setting(QString type, int posX, int posY, View *view);
-
         QString getType() {return this->type;}
         int getPosX() {return this->posX;}
         int getPosY() {return this->posY;}
-
-    private:
-
     protected:
         QString type;
         int posX;
         int posY;
         View *view;
-
 };
-
 
 class Village : public Setting
 {
-
     Q_OBJECT
-
     public:
-
         Village(QString type, int posX, int posY, View *view);
+        // Houses
         ImageSetting *getPapaSmurf() {return this->papaSmurf;}
         ImageSetting *getBrainy() {return this->brainy;}
         ImageSetting *getDoctor() {return this->doctor;}
@@ -63,7 +51,7 @@ class Village : public Setting
         ImageSetting *getMill() {return this->mill;}
         ImageSetting *getWell() {return this->well;}
         ImageSetting *getInventory() {return this->inventory;}
-
+        // Trees
         ImageSetting *getTree1() {return this->tree1;}
         ImageSetting *getTree2() {return this->tree2;}
         ImageSetting *getTree3() {return this->tree3;}
@@ -79,7 +67,7 @@ class Village : public Setting
         ImageSetting *getTree13() {return this->tree13;}
         ImageSetting *getTree14() {return this->tree14;}
         ImageSetting *getTree15() {return this->tree15;}
-
+        // Bushs
         ImageSetting *getBush1() {return this->bush1;}
         ImageSetting *getBush2() {return this->bush2;}
         ImageSetting *getBush3() {return this->bush3;}
@@ -89,27 +77,18 @@ class Village : public Setting
         ImageSetting *getBush7() {return this->bush7;}
         ImageSetting *getBush8() {return this->bush8;}
         ImageSetting *getBush9() {return this->bush9;}
-
     private:
-
         ImageSetting *house1, *house2, *house3, *house4, *house5, *house6, *house7, *house8, *house9, *house10, *house11, *house12;
         ImageSetting *papaSmurf, *brainy, *doctor, *houseSmurfette, *houseHefty, *houseMusician, *houseFarmer, *houseBaker;
         ImageSetting *mill, *well, *inventory;
         ImageSetting *tree1, *tree2, *tree3, *tree4, *tree5, *tree6, *tree7, *tree8, *tree9, *tree10, *tree11, *tree12, *tree13, *tree14, *tree15;
         ImageSetting *bush1, *bush2, *bush3, *bush4, *bush5, *bush6, *bush7, *bush8, *bush9;
-
-    public slots:
-        void pixmapClicked() {qDebug() << "item clicked!";}
-
 };
 
-class Forest : public Setting
-{
-
+class Forest : public Setting {
     Q_OBJECT
-
     public:
-        Forest(QString type, int posX, int posY, View *view);
+        Forest(QString type, int posX, int posY, View *view): Setting(type, posX, posY, view) {}
         int getPosXAcorn() {return this->posXAcorn;}
         int getPosYAcorn() {return this->posYAcorn;}
         int getPosXBerries() {return this->posXBerries;}
@@ -118,11 +97,7 @@ class Forest : public Setting
         int getPosYWheat() {return this->posYWheat;}
         int getPosXSarsaparilla() {return this->posXSarsaparilla;}
         int getPosYSarsaparilla() {return this->posYSarsaparilla;}
-
-    private:
-
     protected:
-
         ImageSetting *acorn, *berries, *wheat;
         int nbAcorn, nbBerry, nbWheat;
         int posXAcorn, posYAcorn;
@@ -131,13 +106,9 @@ class Forest : public Setting
         int posXSarsaparilla, posYSarsaparilla;
 };
 
-class Forest1 : public Forest
-{
-
+class Forest1 : public Forest {
     Q_OBJECT
-
     public:
-
         Forest1(QString type, int posX, int posY, View *view);
         ImageSetting *getTree1() {return this->tree1;}
         ImageSetting *getTree2() {return this->tree2;}
@@ -156,25 +127,19 @@ class Forest1 : public Forest
         ImageSetting *getTree15() {return this->tree15;}
         ImageSetting *getTree16() {return this->tree16;}
         ImageSetting *getTree17() {return this->tree17;}
-
         ImageSetting *getBush1() {return this->bush1;}
         ImageSetting *getBush2() {return this->bush2;}
         ImageSetting *getBushBerries1() {return this->bushBerries1;}
         ImageSetting *getBushBerries2() {return this->bushBerries2;}
-
     private:
         ImageSetting *tree1, *tree2, *tree3, *tree4, *tree5, *tree6, *tree7, *tree8;
         ImageSetting *tree9, *tree10, *tree11, *tree12, *tree13, *tree14, *tree15, *tree16, *tree17;
         ImageSetting *bush1, *bush2, *bushBerries1, *bushBerries2;
 };
 
-class Forest2 : public Forest
-{
-
+class Forest2 : public Forest {
     Q_OBJECT
-
     public:
-
         Forest2(QString type, int posX, int posY, View *view);
         ImageSetting *getTree01() {return this->tree01;}
         ImageSetting *getTree02() {return this->tree02;}
@@ -197,12 +162,10 @@ class Forest2 : public Forest
         ImageSetting *getTree12() {return this->tree12;}
         ImageSetting *getTree13() {return this->tree13;}
         ImageSetting *getTree14() {return this->tree14;}
-
         ImageSetting *getBushBerries1() {return this->bushBerries1;}
         ImageSetting *getBush1() {return this->bush1;}
         ImageSetting *getBush2() {return this->bush2;}
         ImageSetting *getBush3() {return this->bush3;}
-
     private:
         ImageSetting *tree01, *tree02, *tree03, *tree04, *tree05, *tree06, *tree07;
         ImageSetting *tree1, *tree2, *tree3, *tree4, *tree5, *tree6, *tree7, *tree8, *tree9, *tree10;
@@ -210,13 +173,9 @@ class Forest2 : public Forest
         ImageSetting *bushBerries1, *bush1, *bush2, *bush3;
 };
 
-class Forest3 : public Forest
-{
-
+class Forest3 : public Forest {
     Q_OBJECT
-
     public:
-
         Forest3(QString type, int posX, int posY, View *view);
         ImageSetting *getTree01() {return this->tree01;}
         ImageSetting *getTree02() {return this->tree02;}
@@ -237,14 +196,12 @@ class Forest3 : public Forest
         ImageSetting *getTree15() {return this->tree15;}
         ImageSetting *getTree16() {return this->tree16;}
         ImageSetting *getTree17() {return this->tree17;}
-
         ImageSetting *getBushBerries1() {return this->bushBerries1;}
         ImageSetting *getBushBerries2() {return this->bushBerries2;}
         ImageSetting *getBushBerries3() {return this->bushBerries3;}
         ImageSetting *getBush1() {return this->bush1;}
         ImageSetting *getBush2() {return this->bush2;}
         ImageSetting *getSouche1() {return this->souche1;}
-
     private:
         ImageSetting *tree01, *tree02;
         ImageSetting *tree1, *tree2, *tree3, *tree4, *tree5, *tree6, *tree7, *tree8, *tree9;
@@ -252,13 +209,9 @@ class Forest3 : public Forest
         ImageSetting *bushBerries1, *bushBerries2, *bushBerries3, *bush1, *bush2, *souche1;
 };
 
-class Forest4 : public Forest
-{
-
+class Forest4 : public Forest {
     Q_OBJECT
-
     public:
-
         Forest4(QString type, int posX, int posY, View *view);
         ImageSetting *getTree1() {return this->tree1;}
         ImageSetting *getTree2() {return this->tree2;}
@@ -285,7 +238,6 @@ class Forest4 : public Forest
         ImageSetting *getTree23() {return this->tree23;}
         ImageSetting *getTree24() {return this->tree24;}
         ImageSetting *getTree25() {return this->tree25;}
-
         ImageSetting *getBushBerries1() {return this->bushBerries1;}
         ImageSetting *getBush1() {return this->bush1;}
         ImageSetting *getBush2() {return this->bush2;}
@@ -296,7 +248,6 @@ class Forest4 : public Forest
         ImageSetting *getBush7() {return this->bush7;}
         ImageSetting *getBush8() {return this->bush8;}
         ImageSetting *getBush9() {return this->bush9;}
-
     private:
         ImageSetting *tree1, *tree2, *tree3, *tree4, *tree5, *tree6, *tree7, *tree8, *tree9, *tree10;
         ImageSetting *tree11, *tree12, *tree13, *tree14, *tree15, *tree16, *tree17, *tree18, *tree19, *tree20;
@@ -304,13 +255,9 @@ class Forest4 : public Forest
         ImageSetting *bushBerries1, *bush1, *bush2, *bush3, *bush4, *bush5, *bush6, *bush7, *bush8, *bush9;
 };
 
-class Forest5 : public Forest
-{
-
+class Forest5 : public Forest {
     Q_OBJECT
-
     public:
-
         Forest5(QString type, int posX, int posY, View *view);
         ImageSetting *getTree1() {return this->tree1;}
         ImageSetting *getTree2() {return this->tree2;}
@@ -327,7 +274,6 @@ class Forest5 : public Forest
         ImageSetting *getTree13() {return this->tree13;}
         ImageSetting *getTree14() {return this->tree14;}
         ImageSetting *getTree15() {return this->tree15;}
-
         ImageSetting *getTree16() {return this->tree16;}
         ImageSetting *getTree17() {return this->tree17;}
         ImageSetting *getTree18() {return this->tree18;}
@@ -343,10 +289,8 @@ class Forest5 : public Forest
         ImageSetting *getTree28() {return this->tree28;}
         ImageSetting *getTree29() {return this->tree29;}
         ImageSetting *getTree30() {return this->tree30;}
-
         ImageSetting *getBushBerries1() {return this->bushBerries1;}
         ImageSetting *getBushBerries2() {return this->bushBerries2;}
-
     private:
         ImageSetting *tree1, *tree2, *tree3, *tree4, *tree5, *tree6, *tree7, *tree8, *tree9, *tree10;
         ImageSetting *tree11, *tree12, *tree13, *tree14, *tree15, *tree16, *tree17, *tree18, *tree19, *tree20;
@@ -354,13 +298,9 @@ class Forest5 : public Forest
         ImageSetting *bushBerries1, *bushBerries2;
 };
 
-class Forest6 : public Forest
-{
-
+class Forest6 : public Forest {
     Q_OBJECT
-
     public:
-
         Forest6(QString type, int posX, int posY, View *view);
         ImageSetting *getTree1() {return this->tree1;}
         ImageSetting *getTree2() {return this->tree2;}
@@ -392,10 +332,8 @@ class Forest6 : public Forest
         ImageSetting *getTree28() {return this->tree28;}
         ImageSetting *getTree29() {return this->tree29;}
         ImageSetting *getTree30() {return this->tree30;}
-
         ImageSetting *getBushBerries1() {return this->bushBerries1;}
         ImageSetting *getBush1() {return this->bush1;}
-
     private:
         ImageSetting *tree1, *tree2, *tree3, *tree4, *tree5, *tree6, *tree7, *tree8, *tree9, *tree10;
         ImageSetting *tree11, *tree12, *tree13, *tree14, *tree15, *tree16, *tree17, *tree18, *tree19, *tree20;
@@ -403,13 +341,9 @@ class Forest6 : public Forest
         ImageSetting *bushBerries1, *bush1;
 };
 
-class Forest7 : public Forest
-{
-
+class Forest7 : public Forest {
     Q_OBJECT
-
     public:
-
         Forest7(QString type, int posX, int posY, View *view);
         ImageSetting *getTree1() {return this->tree1;}
         ImageSetting *getTree2() {return this->tree2;}
@@ -441,7 +375,6 @@ class Forest7 : public Forest
         ImageSetting *getTree28() {return this->tree28;}
         ImageSetting *getTree29() {return this->tree29;}
         ImageSetting *getTree30() {return this->tree30;}
-
         ImageSetting *getBushBerries1() {return this->bushBerries1;}
         ImageSetting *getBushBerries2() {return this->bushBerries2;}
         ImageSetting *getBushBerries3() {return this->bushBerries3;}
@@ -455,7 +388,6 @@ class Forest7 : public Forest
         ImageSetting *getSouche1() {return this->souche1;}
         ImageSetting *getSouche2() {return this->souche2;}
         ImageSetting *getSouche3() {return this->souche3;}
-
     private:
         ImageSetting *tree1, *tree2, *tree3, *tree4, *tree5, *tree6, *tree7, *tree8, *tree9, *tree10;
         ImageSetting *tree11, *tree12, *tree13, *tree14, *tree15, *tree16, *tree17, *tree18, *tree19, *tree20;

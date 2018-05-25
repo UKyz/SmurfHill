@@ -17,38 +17,15 @@
 class Resource;
 
 class Image: public QObject, public QGraphicsPixmapItem {
-
     Q_OBJECT
-
     public:
         Image(QString url, QGraphicsItem * parent=0);
         void *getParent() {return this->parent;}
-
     signals:
         void clicked();
-
     protected:
-        // re-implement processing of mouse events
-        void mouseReleaseEvent ( QGraphicsSceneMouseEvent *e )
-        {
-            // check if cursor not moved since click beginning
-            if ((m_mouseClick) && (e->pos() == m_lastPoint))
-            {
-                // do something: for example emit Click signal
-                emit clicked();
-            }
-        }
-
-        void mousePressEvent ( QGraphicsSceneMouseEvent *e )
-        {
-            // store click position
-            m_lastPoint = e->pos();
-            // set the flag meaning "click begin"
-            m_mouseClick = true;
-
-            qDebug() << "Wallah";
-        }
-
+        void mouseReleaseEvent (QGraphicsSceneMouseEvent *e);
+        void mousePressEvent (QGraphicsSceneMouseEvent *e);
     private:
         bool m_mouseClick;
         QPointF m_lastPoint;
@@ -56,44 +33,21 @@ class Image: public QObject, public QGraphicsPixmapItem {
 };
 
 class ImageSetting: public QObject, public QGraphicsPixmapItem {
-
     Q_OBJECT
-
     public:
         ImageSetting(QString url, QGraphicsItem * parent=0);
-
     signals:
         void clicked();
-
     protected:
-        // re-implement processing of mouse events
-        void mouseReleaseEvent ( QGraphicsSceneMouseEvent *e )
-        {
-            // check if cursor not moved since click beginning
-            if ((m_mouseClick) && (e->pos() == m_lastPoint))
-            {
-                // do something: for example emit Click signal
-                emit clicked();
-            }
-        }
-
-        void mousePressEvent ( QGraphicsSceneMouseEvent *e )
-        {
-            // store click position
-            m_lastPoint = e->pos();
-            // set the flag meaning "click begin"
-            m_mouseClick = true;
-        }
-
+        void mouseReleaseEvent (QGraphicsSceneMouseEvent *e);
+        void mousePressEvent (QGraphicsSceneMouseEvent *e);
     private:
         bool m_mouseClick;
         QPointF m_lastPoint;
 };
 
 class WheatField: public QObject {
-
     Q_OBJECT
-
     public:
         WheatField(int numberWheatToHarvest = 0, int capacity = 10, int size = 100);
         void increaseCapacity(int capacity) {this->capacity += capacity;}
@@ -102,25 +56,20 @@ class WheatField: public QObject {
         int getNumberWheatToHarvest() {return this->numberWheatToHarvest;}
         int getSize() {return this->size;}
         int getCapacity() {return this->capacity;}
-
     private:
         int numberWheatToHarvest;
         int capacity;
         int size;
-
     public slots:
-        void ete();
+        void summer();
 };
 
 class Score: public QObject {
-
     Q_OBJECT
-
     public:
         Score(int points = 0);
         int getPoints() {return this->points;}
         void addPoints(int nb) {this->points += nb;}
-
     private:
         int points;
 };

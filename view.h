@@ -34,12 +34,9 @@ namespace Ui {
     class View;
 }
 
-class View : public QMainWindow
-{
+class View : public QMainWindow {
     Q_OBJECT
-
     public:
-
         explicit View(QWidget *parent = 0);
         ~View();
 
@@ -53,57 +50,44 @@ class View : public QMainWindow
         void addForest5(Forest5 *forest);
         void addForest6(Forest6 *forest);
         void addForest7(Forest7 *forest);
-        void addNormalPerso(NicePerso *perso);
-        void addNormalPerso(MadPerso *perso);
-        void addNormalPerso(NormalPerso *perso);
-
+        void addNormalPerso(NormalPerso *perso) {this->scene->addItem(perso->getImagePerso());}
         void displayMistakeMoney();
-
         QDateTime heureDebut();
         void menu();
         QGraphicsScene *scene;
-
         bool menuDisplay = true;
         int cptMovie = 0;
         bool generique = false;
         QMediaPlayer *player;
         void displayFrontMessage();
         bool frontMessage;
-
     public slots:
         void SwitchLanguage();
-
     private slots:
-
         void movie();
         void music();
         void on_pushButton_clicked();
         void on_pushButton_2_clicked();
         void save();
         void saveQuit();
-
         void displayMessageSmurfette();
         void displayMessagePapaSmurf();
         void displayMessageBrainy();
         void hideMessageS();
         void hideFrontMessage();
-
         void inventoryContents();
         void displayActionFarmer();
         void displayActionBaker();
         void displayActionHefty();
         void displayActionDoctor();
-
     private:
         Ui::View *ui;
         Controller *controller;
         void mousePressEvent(QMouseEvent *event);
-        void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
         bool m_mouseClick;
         QPointF m_lastPoint;
         QTimer *timer;
         QList <QString> list_movies;
-
         Image *bubbleMessageS;
         Image *imageMessageS;
         QGraphicsTextItem *textMessageS;
