@@ -34,7 +34,7 @@ Feel free to contribute or discuss the game.
 
 ## Requirements 
 
-* Qt (>= 5.2) [(Install)][Qt]
+* Qt (>= 5.2) [(install link)][Qt]
 * Qt multimedia
 
 ## Gameplay
