@@ -16,9 +16,10 @@ Feel free to contribute or discuss the game.
   * [Gameplay][Gameplay]
     * [Village][Village]
     * [Forests][Forests]
-    * [NicePerso][NicePerso]
-    * [MadPerso][MadPerso]
-    * [NonPlayerPerso][NonPlayerPerso]
+    * [Persos][Persos]
+      * [NicePerso][NicePerso]
+      * [MadPerso][MadPerso]
+      * [NonPlayerPerso][NonPlayerPerso]
     * [Screenshots][Screenshots]
   * [Team][Team]
 
@@ -60,17 +61,19 @@ There are 4 different types of resources: <br />
 *	Acorns also used as a treatment.
 *	Sarsaparillas considered as a money.
 
-### NicePerso
+### Persos
+
+#### NicePerso
 
 The Smurf community is composed of NicePerso. These characters will move on the map to the point you clicked. If they go through a resource, the Smurf will pick it up and add it to the inventory of the village. <br />
 Going into a forest is dangerous because of the MadPerso. Fighting a MadPerso will give you 100 points for the score but the Smurfs will lose living points. You will need to feed them thanks to Doctor Smurf.
 
-### MadPerso
+#### MadPerso
 
 As in every world, enemies are there to make the game more difficult. The enemies are placed at every strategic point such as on a crossroad or at each forest entrance. <br />
 Each enemy has living and damage points. Each fight between NicePerso and MadPerso will cause point loose. As soon as the NicePerso is done fighting and wins, he can keep going but a new MadPerso will reappear after 30 seconds.
 
-### NonPlayerPerso
+#### NonPlayerPerso
 
 Farmer Smurf, Baker Smurf, Hefty Smurf and Doctor Smurf are called the NonPlayerPerso. Each one has specific skills: <br />
 *	Farmer Smurf has fields to harvest. He will give you some wheat.
@@ -105,6 +108,7 @@ Farmer Smurf, Baker Smurf, Hefty Smurf and Doctor Smurf are called the NonPlayer
 [Screenshots]: https://github.com/UKyz/SmurfHill/blob/master/README.md#screenshots
 [Village]: https://github.com/UKyz/SmurfHill/blob/master/README.md#village
 [Forests]: https://github.com/UKyz/SmurfHill/blob/master/README.md#forests
+[Persos][Persos]: https://github.com/UKyz/SmurfHill/blob/master/README.md#persos
 [NicePerso]: https://github.com/UKyz/SmurfHill/blob/master/README.md#niceperso
 [MadPerso]: https://github.com/UKyz/SmurfHill/blob/master/README.md#madperso
 [NonPlayerPerso]: https://github.com/UKyz/SmurfHill/blob/master/README.md#nonplayerperso
