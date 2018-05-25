@@ -92,10 +92,10 @@ Farmer Smurf, Baker Smurf, Hefty Smurf and Doctor Smurf are called the NonPlayer
 
 [Installation]: https://github.com/UKyz/SmurfHill/blob/master/README.md#install--play
 [Gameplay]: https://github.com/UKyz/SmurfHill/blob/master/README.md#gameplay
-[Screenshots]: https://github.com/UKyz/SmurHill/blob/master/README.md#screenshots
-[Village]: https://github.com/UKyz/SmurHill/blob/master/README.md#village
-[Forests]: https://github.com/UKyz/SmurHill/blob/master/README.md#forests
-[NicePerso]: https://github.com/UKyz/SmurHill/blob/master/README.md#niceperso
-[MadPerso]: https://github.com/UKyz/SmurHill/blob/master/README.md#madperso
-[NonPlayerPerso]: https://github.com/UKyz/SmurHill/blob/master/README.md#nonplayerperso
+[Screenshots]: https://github.com/UKyz/SmurfHill/blob/master/README.md#screenshots
+[Village]: https://github.com/UKyz/SmurfHill/blob/master/README.md#village
+[Forests]: https://github.com/UKyz/SmurfHill/blob/master/README.md#forests
+[NicePerso]: https://github.com/UKyz/SmurfHill/blob/master/README.md#niceperso
+[MadPerso]: https://github.com/UKyz/SmurfHill/blob/master/README.md#madperso
+[NonPlayerPerso]: https://github.com/UKyz/SmurfHill/blob/master/README.md#nonplayerperso
 [Team]: https://github.com/UKyz/SmurfHill/blob/master/README.md#team-
