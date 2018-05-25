@@ -1,8 +1,9 @@
 #ifndef DECOR_H
 #define DECOR_H
 
-#include "autre.h"
-#include "view.h"
+#include "../model/autre.h"
+#include "../view/view.h"
+
 #include <QtDebug>
 
 class View;

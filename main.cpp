@@ -1,7 +1,7 @@
-#include "view.h"
-#include "model.h"
-#include "controller.h"
-#include "autre.h"
+#include "view/view.h"
+#include "model/model.h"
+#include "controller/controller.h"
+#include "model/autre.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsView>

@@ -1,10 +1,10 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "autre.h"
-#include "controller.h"
-#include "decor.h"
-#include "personnages.h"
+#include "../model/autre.h"
+#include "../controller/controller.h"
+#include "../model/decor.h"
+#include "../model/personnages.h"
 
 #include <QMainWindow>
 #include <QTableWidget>

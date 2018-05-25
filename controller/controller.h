@@ -1,9 +1,9 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "autre.h"
-#include "view.h"
-#include "model.h"
+#include "../model/autre.h"
+#include "../view/view.h"
+#include "../model/model.h"
 
 #include <QObject>
 #include <QWidget>

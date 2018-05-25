@@ -13,8 +13,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Schtroumph-Hill
 TEMPLATE = app
 TRANSLATIONS += \
-        smurfHill_fr_FR.ts \
-        smurfHill_en_EN.ts
+        translations/smurfHill_fr_FR.ts \
+        translations/smurfHill_en_EN.ts
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -30,27 +30,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        view.cpp \
-    model.cpp \
-    controller.cpp \
-    autre.cpp \
-    personnages.cpp \
-    ressources.cpp \
-    decor.cpp \
-    action.cpp
+        view/view.cpp \
+    model/model.cpp \
+    controller/controller.cpp \
+    model/autre.cpp \
+    model/personnages.cpp \
+    model/ressources.cpp \
+    model/decor.cpp \
+    model/action.cpp
 
 HEADERS += \
-        view.h \
-    model.h \
-    controller.h \
-    autre.h \
-    personnages.h \
-    ressources.h \
-    decor.h \
-    action.h
+        view/view.h \
+    model/model.h \
+    controller/controller.h \
+    model/autre.h \
+    model/personnages.h \
+    model/ressources.h \
+    model/decor.h \
+    model/action.h
 
 FORMS += \
-        view.ui
+        view/view.ui
 
 SUBDIRS += \
     Schtroumph-Hill.pro

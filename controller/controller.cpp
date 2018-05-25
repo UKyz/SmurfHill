@@ -1,10 +1,10 @@
-#include "view.h"
+#include "../view/view.h"
 #include "controller.h"
-#include "model.h"
-#include "autre.h"
-#include "personnages.h"
-#include "ressources.h"
-#include "decor.h"
+#include "../model/model.h"
+#include "../model/autre.h"
+#include "../model/personnages.h"
+#include "../model/ressources.h"
+#include "../model/decor.h"
 
 #include <QMessageBox>
 #include <QGraphicsScene>

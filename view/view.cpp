@@ -1,9 +1,9 @@
 #include "view.h"
 #include "ui_view.h"
-#include "controller.h"
-#include "model.h"
-#include "autre.h"
-#include "decor.h"
+#include "../controller/controller.h"
+#include "../model/model.h"
+#include "../model/autre.h"
+#include "../model/decor.h"
 
 #include <QTableWidget>
 #include <QMessageBox>

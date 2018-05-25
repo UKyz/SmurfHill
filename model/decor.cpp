@@ -1,5 +1,5 @@
 #include "decor.h"
-#include "view.h"
+#include "../view/view.h"
 
 Setting::Setting(QString type, int posX, int posY, View *view): QObject() {
     this->type = type;

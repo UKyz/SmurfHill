@@ -1,5 +1,5 @@
-#include "view.h"
-#include "controller.h"
+#include "../view/view.h"
+#include "../controller/controller.h"
 #include "model.h"
 #include "decor.h"
 #include "personnages.h"
