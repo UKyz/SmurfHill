@@ -16,7 +16,7 @@ Feel free to contribute or discuss the game.
   * [Gameplay][Gameplay]
     * [Village][Village]
     * [Forests][Forests]
-    * [Persos][Persos]
+    * [Characters][Persos]
       * [NicePerso][NicePerso]
       * [MadPerso][MadPerso]
       * [NonPlayerPerso][NonPlayerPerso]
@@ -61,7 +61,7 @@ There are 4 different types of resources: <br />
 *	Acorns also used as a treatment.
 *	Sarsaparillas considered as a money.
 
-### Persos
+### Characters
 
 #### NicePerso
 
@@ -97,7 +97,7 @@ Farmer Smurf, Baker Smurf, Hefty Smurf and Doctor Smurf are called the NonPlayer
   <img width="356" height="200" src="http://victor-fauquembergue.fr/imagesGit/smurf9">
  </p>
 
-## Team :
+## Credits
   * Couton Alexia (Save, Decor, Translations)
   * Fauquembergue Victor (MVC, Perso, GameLoop, Resource)
 
@@ -108,7 +108,7 @@ Farmer Smurf, Baker Smurf, Hefty Smurf and Doctor Smurf are called the NonPlayer
 [Screenshots]: https://github.com/UKyz/SmurfHill/blob/master/README.md#screenshots
 [Village]: https://github.com/UKyz/SmurfHill/blob/master/README.md#village
 [Forests]: https://github.com/UKyz/SmurfHill/blob/master/README.md#forests
-[Persos]: https://github.com/UKyz/SmurfHill/blob/master/README.md#persos
+[Persos]: https://github.com/UKyz/SmurfHill/blob/master/README.md#characters
 [NicePerso]: https://github.com/UKyz/SmurfHill/blob/master/README.md#niceperso
 [MadPerso]: https://github.com/UKyz/SmurfHill/blob/master/README.md#madperso
 [NonPlayerPerso]: https://github.com/UKyz/SmurfHill/blob/master/README.md#nonplayerperso
